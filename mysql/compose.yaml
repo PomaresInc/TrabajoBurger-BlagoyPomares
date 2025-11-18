@@ -4,10 +4,10 @@ services:
   database:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: pedro
+      MYSQL_ROOT_PASSWORD: 12345678Aa
       MYSQL_DATABASE: vegaburguer
-      MYSQL_USER: pedro
-      MYSQL_PASSWORD: pedro
+      MYSQL_USER: federico
+      MYSQL_PASSWORD: federico
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
