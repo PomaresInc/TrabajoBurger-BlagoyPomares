@@ -29,22 +29,27 @@ public class DataBaseConnection {
 
         String user = props.getProperty("database.user");
         String password = props.getProperty("database.password");
-        this.connection_string = props.getProperty("database.path")
-                + ";user=" + user + ";password=" + password;
-        this.conexion =
-                DriverManager.getConnection(this.connection_string);
+        String driver = props.getProperty("database.driver");
+
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        this.connection_string = props.getProperty("database.path");
+        this.conexion = DriverManager.getConnection(
+            this.connection_string, user, password);
     }
 
     public Connection getConnection() {
         return this.conexion;
     }
     public void close() throws SQLException {
-
-        conexion.close();
-
-        DriverManager.getConnection(this.connection_string+";shutdown=true");
-
-        conexion = null;
+        if (conexion != null && !conexion.isClosed()) {
+            conexion.close();
+            conexion = null;
+        }
     }
     public String getConfig_path() {
         return config_path;

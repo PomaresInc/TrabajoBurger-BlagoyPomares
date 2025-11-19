@@ -22,7 +22,7 @@ private val DarkColors = darkColorScheme(
     secondary = Color(0xFF8CDDA9),
     onSecondary = Color(0xFF00391F),
     background = Color(0xFF1C1B1F),
-    onBackground = Color(0xFFE5E1E6),
+    onBackground = Color(0xFF846C9C),
 )
 
 @Composable
