@@ -31,12 +31,6 @@ public class DataBaseConnection {
         String password = props.getProperty("database.password");
         String driver = props.getProperty("database.driver");
 
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        
         this.connection_string = props.getProperty("database.path");
         this.conexion = DriverManager.getConnection(
             this.connection_string, user, password);

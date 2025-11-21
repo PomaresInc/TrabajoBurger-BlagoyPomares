@@ -8,7 +8,7 @@ class BorrarDependienteUseCase(private val repositorio: IDependienteRepositorio,
 
     suspend  fun invoke(id: String) {
         val tempo=repositorio.getById(id)
-        val elementos=repositorio.getAll();
+
         //this.validateUser(user)
         if (tempo==null) {
             throw IllegalArgumentException("El id no está registrado.")

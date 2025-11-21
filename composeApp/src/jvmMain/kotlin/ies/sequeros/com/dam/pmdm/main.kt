@@ -11,7 +11,7 @@ import java.util.logging.LogManager
 fun main() = application {
     val dependienteRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
     val dependienteRepositorio: IDependienteRepositorio = BBDDDependienteRepository(dependienteRepositorioJava )
-    configureExternalLogging("/logging.properties")
+    configureExternalLogging("./logging.properties")
     Window(
         onCloseRequest = {
             //se cierra la conexion
