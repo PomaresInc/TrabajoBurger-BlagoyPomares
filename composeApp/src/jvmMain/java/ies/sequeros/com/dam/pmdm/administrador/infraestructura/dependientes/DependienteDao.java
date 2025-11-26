@@ -21,7 +21,7 @@ public class DependienteDao implements IDao<Dependiente> {
     private final String selectbyid = "select * from " + table_name + " where id=?";
     private final String findbyname = "select * from " + table_name + " where name=?";
 
-    private final String deletebyid = "delete from " + table_name + " where id='?'";
+    private final String deletebyid = "delete from " + table_name + " where id=?";
     private final String insert = "INSERT INTO " + table_name + " (id, name, email, password, image_path, enabled, is_admin) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final String update =
@@ -146,13 +146,16 @@ public class DependienteDao implements IDao<Dependiente> {
     @Override
     public void delete(final Dependiente item) {
         try {
+            Logger logger = Logger.getLogger(DependienteDao.class.getName());
+            logger.info("Ejecutando SQL: " + deletebyid + " | Parametros: [id=" + item.getId() + "]");
+
             final PreparedStatement pst =
                     conn.getConnection().prepareStatement(deletebyid);
             pst.setString(1, item.getId());
             pst.executeUpdate();
             pst.close();
-            Logger logger = Logger.getLogger(DependienteDao.class.getName());
-            logger.info("Ejecutando SQL: " + deletebyid + " | Parametros: [id=" + item.getId() + "]");
+            //Logger logger = Logger.getLogger(DependienteDao.class.getName());
+            //logger.info("Ejecutando SQL: " + deletebyid + " | Parametros: [id=" + item.getId() + "]");
 
         } catch (final SQLException ex) {
             Logger.getLogger(DependienteDao.class.getName()).log(Level.SEVERE,

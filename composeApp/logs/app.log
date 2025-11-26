@@ -46,3 +46,207 @@ nov 14, 2025 4:30:57 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestruct
 INFORMACIÓN: Ejecutando SQL: select * from DEPENDIENTE where id=? | Parametros: [id=c27f8f72-2ff9-45dc-a114-d7f942ee15a4]
 nov 14, 2025 4:30:57 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao update
 INFORMACIÓN: Ejecutando SQL: UPDATE DEPENDIENTE SET name = ?, email = ?, password = ?, image_path = ?, enabled = ?, is_admin = ? WHERE id = ? | Params: [1]=897897lkopokpkopk, [2]=fdsfds@dfdsf, [3]=123456789P, [4]=c27f8f72-2ff9-45dc-a114-d7f942ee15a4.jpg, [5]=true, [6]=true, [7]=c27f8f72-2ff9-45dc-a114-d7f942ee15a4]
+nov 21, 2025 5:48:52 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 5:49:22 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao insert
+INFORMACIÓN: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=8df8e738-61ca-4556-b62b-2c550e997f4c, [2]=efsf, [3]=dsad@ds, [4]=12345678Aa, [5]=8df8e738-61ca-4556-b62b-2c550e997f4c.jpeg, [6]=false, [7]=false]
+nov 21, 2025 5:50:51 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 5:52:18 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 5:52:23 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:52:23 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:52:23 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
+GRAVE: null
+java.sql.SQLException: Parameter index out of range (1 > number of parameters, which is 0).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1345)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1358)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1714)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao.delete(DependienteDao.java:151)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava.remove(BBDDRepositorioDependientesJava.java:26)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava.remove(BBDDRepositorioDependientesJava.java:32)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.BBDDDependienteRepository.remove(BBDDDependienteRepository.kt:21)
+	at ies.sequeros.com.dam.pmdm.administrador.aplicacion.dependientes.BorrarDependienteUseCase.invoke(BorrarDependienteUseCase.kt:19)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel$delete$1.invokeSuspend(DependientesViewModel.kt:110)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.DispatchedContinuationKt.resumeCancellableWith(DispatchedContinuation.kt:375)
+	at kotlinx.coroutines.intrinsics.CancellableKt.startCoroutineCancellable(Cancellable.kt:26)
+	at kotlinx.coroutines.CoroutineStart.invoke(CoroutineStart.kt:358)
+	at kotlinx.coroutines.AbstractCoroutine.start(AbstractCoroutine.kt:134)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch(Builders.common.kt:53)
+	at kotlinx.coroutines.BuildersKt.launch(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch$default(Builders.common.kt:44)
+	at kotlinx.coroutines.BuildersKt.launch$default(Unknown Source)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel.delete(DependientesViewModel.kt:109)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesKt$Dependientes$1$2$1$1.invoke$lambda$4$0(Dependientes.kt:118)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependienteCardKt$DependienteCard$1.invoke$lambda$0$3$3$0(DependienteCard.kt:213)
+	at androidx.compose.foundation.ClickableNode.onPointerEvent-H0pRuoY(Clickable.kt:1014)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:444)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:430)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:430)
+	at androidx.compose.ui.input.pointer.NodeParent.dispatchMainEventPass(HitPathTracker.kt:276)
+	at androidx.compose.ui.input.pointer.HitPathTracker.dispatchChanges(HitPathTracker.kt:172)
+	at androidx.compose.ui.input.pointer.PointerInputEventProcessor.process-BIzXfog(PointerInputEventProcessor.kt:118)
+	at androidx.compose.ui.node.RootNodeOwner.onPointerInput-l-3BpVI(RootNodeOwner.skiko.kt:315)
+	at androidx.compose.ui.scene.CanvasLayersComposeSceneImpl.processRelease-l-3BpVI(CanvasLayersComposeScene.skiko.kt:335)
+	at androidx.compose.ui.scene.CanvasLayersComposeSceneImpl.processPointerInputEvent-l-3BpVI(CanvasLayersComposeScene.skiko.kt:236)
+	at androidx.compose.ui.scene.BaseComposeScene$inputHandler$2.invoke-l-3BpVI(BaseComposeScene.skiko.kt:65)
+	at androidx.compose.ui.scene.BaseComposeScene$inputHandler$2.invoke(BaseComposeScene.skiko.kt:65)
+	at androidx.compose.ui.input.pointer.SyntheticEventSender.sendInternal-l-3BpVI(SyntheticEventSender.skiko.kt:197)
+	at androidx.compose.ui.input.pointer.SyntheticEventSender.send-l-3BpVI(SyntheticEventSender.skiko.kt:82)
+	at androidx.compose.ui.scene.ComposeSceneInputHandler.onPointerEvent--c_cFIg(ComposeSceneInputHandler.skiko.kt:130)
+	at androidx.compose.ui.scene.ComposeSceneInputHandler.onPointerEvent-lDgZiSw(ComposeSceneInputHandler.skiko.kt:91)
+	at androidx.compose.ui.scene.BaseComposeScene.sendPointerEvent-lDgZiSw(BaseComposeScene.skiko.kt:216)
+	at androidx.compose.ui.scene.ComposeScene.sendPointerEvent-lDgZiSw$default(ComposeScene.skiko.kt:202)
+	at androidx.compose.ui.scene.ComposeSceneMediator_desktopKt.onMouseEvent-d-4ec7I(ComposeSceneMediator.desktop.kt:846)
+	at androidx.compose.ui.scene.ComposeSceneMediator_desktopKt.access$onMouseEvent-d-4ec7I(ComposeSceneMediator.desktop.kt:1)
+	at androidx.compose.ui.scene.ComposeSceneMediator.onMouseEvent(ComposeSceneMediator.desktop.kt:454)
+	at androidx.compose.ui.scene.ComposeSceneMediator.access$onMouseEvent(ComposeSceneMediator.desktop.kt:110)
+	at androidx.compose.ui.scene.ComposeSceneMediator$mouseListener$1.mouseReleased(ComposeSceneMediator.desktop.kt:269)
+	at java.desktop/java.awt.Component.processMouseEvent(Unknown Source)
+	at java.desktop/java.awt.Component.processEvent(Unknown Source)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.Component.dispatchEvent(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue$5.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$5.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.run(Unknown Source)
+
+nov 21, 2025 5:53:57 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 5:54:11 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:55:19 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:56:25 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
+GRAVE: null
+java.sql.SQLException: Parameter index out of range (1 > number of parameters, which is 0).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1345)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1358)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1714)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao.delete(DependienteDao.java:151)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava.remove(BBDDRepositorioDependientesJava.java:26)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava.remove(BBDDRepositorioDependientesJava.java:32)
+	at ies.sequeros.com.dam.pmdm.administrador.infraestructura.BBDDDependienteRepository.remove(BBDDDependienteRepository.kt:21)
+	at ies.sequeros.com.dam.pmdm.administrador.aplicacion.dependientes.BorrarDependienteUseCase.invoke(BorrarDependienteUseCase.kt:19)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel$delete$1.invokeSuspend(DependientesViewModel.kt:110)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith$$$capture(ContinuationImpl.kt:34)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt)
+	at --- Async.Stack.Trace --- (captured by IntelliJ IDEA debugger)
+	at kotlinx.coroutines.debug.internal.DebugProbesImpl$CoroutineOwner.<init>(DebugProbesImpl.kt:531)
+	at kotlinx.coroutines.debug.internal.DebugProbesImpl.createOwner(DebugProbesImpl.kt:510)
+	at kotlinx.coroutines.debug.internal.DebugProbesImpl.probeCoroutineCreated$kotlinx_coroutines_core(DebugProbesImpl.kt:497)
+	at kotlin.coroutines.jvm.internal.DebugProbesKt.probeCoroutineCreated(DebugProbes.kt:7)
+	at kotlin.coroutines.intrinsics.IntrinsicsKt__IntrinsicsJvmKt.createCoroutineUnintercepted(IntrinsicsJvm.kt:161)
+	at kotlinx.coroutines.intrinsics.CancellableKt.startCoroutineCancellable(Cancellable.kt:26)
+	at kotlinx.coroutines.CoroutineStart.invoke(CoroutineStart.kt:358)
+	at kotlinx.coroutines.AbstractCoroutine.start(AbstractCoroutine.kt:134)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch(Builders.common.kt:53)
+	at kotlinx.coroutines.BuildersKt.launch(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch$default(Builders.common.kt:44)
+	at kotlinx.coroutines.BuildersKt.launch$default(Unknown Source)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel.delete(DependientesViewModel.kt:109)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesKt$Dependientes$1$2$1$1.invoke$lambda$4$0(Dependientes.kt:118)
+	at ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependienteCardKt$DependienteCard$1.invoke$lambda$0$3$3$0(DependienteCard.kt:213)
+	at androidx.compose.foundation.ClickableNode.onPointerEvent-H0pRuoY(Clickable.kt:1014)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:444)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:430)
+	at androidx.compose.ui.input.pointer.Node.dispatchMainEventPass(HitPathTracker.kt:430)
+	at androidx.compose.ui.input.pointer.NodeParent.dispatchMainEventPass(HitPathTracker.kt:276)
+	at androidx.compose.ui.input.pointer.HitPathTracker.dispatchChanges(HitPathTracker.kt:172)
+	at androidx.compose.ui.input.pointer.PointerInputEventProcessor.process-BIzXfog(PointerInputEventProcessor.kt:118)
+	at androidx.compose.ui.node.RootNodeOwner.onPointerInput-l-3BpVI(RootNodeOwner.skiko.kt:315)
+	at androidx.compose.ui.scene.CanvasLayersComposeSceneImpl.processRelease-l-3BpVI(CanvasLayersComposeScene.skiko.kt:335)
+	at androidx.compose.ui.scene.CanvasLayersComposeSceneImpl.processPointerInputEvent-l-3BpVI(CanvasLayersComposeScene.skiko.kt:236)
+	at androidx.compose.ui.scene.BaseComposeScene$inputHandler$2.invoke-l-3BpVI(BaseComposeScene.skiko.kt:65)
+	at androidx.compose.ui.scene.BaseComposeScene$inputHandler$2.invoke(BaseComposeScene.skiko.kt:65)
+	at androidx.compose.ui.input.pointer.SyntheticEventSender.sendInternal-l-3BpVI(SyntheticEventSender.skiko.kt:197)
+	at androidx.compose.ui.input.pointer.SyntheticEventSender.send-l-3BpVI(SyntheticEventSender.skiko.kt:82)
+	at androidx.compose.ui.scene.ComposeSceneInputHandler.onPointerEvent--c_cFIg(ComposeSceneInputHandler.skiko.kt:130)
+	at androidx.compose.ui.scene.ComposeSceneInputHandler.onPointerEvent-lDgZiSw(ComposeSceneInputHandler.skiko.kt:91)
+	at androidx.compose.ui.scene.BaseComposeScene.sendPointerEvent-lDgZiSw(BaseComposeScene.skiko.kt:216)
+	at androidx.compose.ui.scene.ComposeScene.sendPointerEvent-lDgZiSw$default(ComposeScene.skiko.kt:202)
+	at androidx.compose.ui.scene.ComposeSceneMediator_desktopKt.onMouseEvent-d-4ec7I(ComposeSceneMediator.desktop.kt:846)
+	at androidx.compose.ui.scene.ComposeSceneMediator_desktopKt.access$onMouseEvent-d-4ec7I(ComposeSceneMediator.desktop.kt:1)
+	at androidx.compose.ui.scene.ComposeSceneMediator.onMouseEvent(ComposeSceneMediator.desktop.kt:454)
+	at androidx.compose.ui.scene.ComposeSceneMediator.access$onMouseEvent(ComposeSceneMediator.desktop.kt:110)
+	at androidx.compose.ui.scene.ComposeSceneMediator$mouseListener$1.mouseReleased(ComposeSceneMediator.desktop.kt:269)
+	at java.desktop/java.awt.Component.processMouseEvent(Unknown Source)
+	at java.desktop/java.awt.Component.processEvent(Unknown Source)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.Component.dispatchEvent(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue$5.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$5.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.run(Unknown Source)
+
+nov 21, 2025 5:58:08 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 5:58:16 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:58:25 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 5:58:26 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
+INFORMACIÓN: Ejecutando SQL: delete from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 6:00:33 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 6:00:59 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao insert
+INFORMACIÓN: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=99f231a3-2bd5-4240-acc1-115afb000c21, [2]=fesw, [3]=fea@fds, [4]=12345678Aa, [5]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [6]=false, [7]=false]
+nov 21, 2025 6:01:02 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:02 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao update
+INFORMACIÓN: Ejecutando SQL: UPDATE dependiente SET name = ?, email = ?, password = ?, image_path = ?, enabled = ?, is_admin = ? WHERE id = ? | Params: [1]=fesw, [2]=fea@fds, [3]=12345678Aa, [4]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [5]=true, [6]=false, [7]=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao update
+INFORMACIÓN: Ejecutando SQL: UPDATE dependiente SET name = ?, email = ?, password = ?, image_path = ?, enabled = ?, is_admin = ? WHERE id = ? | Params: [1]=fesw, [2]=fea@fds, [3]=12345678Aa, [4]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [5]=false, [6]=false, [7]=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
+INFORMACIÓN: Ejecutando SQL: delete from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 26, 2025 7:56:26 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 26, 2025 8:03:29 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 26, 2025 8:04:51 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao insert
+INFO: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=732229c9-084b-413e-bd60-20ff23c603c6, [2]=Pomares, [3]=javierpomaresgomez@gmail.com, [4]=12345678Aa, [5]=732229c9-084b-413e-bd60-20ff23c603c6.png, [6]=true, [7]=true]
+nov 26, 2025 8:05:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 

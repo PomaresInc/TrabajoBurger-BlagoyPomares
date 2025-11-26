@@ -11,11 +11,15 @@ import java.util.logging.LogManager
 fun main() = application {
     val dependienteRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
     val dependienteRepositorio: IDependienteRepositorio = BBDDDependienteRepository(dependienteRepositorioJava )
-    configureExternalLogging("/logging.properties")
+    val categoriaRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
+    val categoriaRepositorio: IDependienteRepositorio = BBDDDependienteRepository(categoriaRepositorioJava )
+
+    configureExternalLogging("./logging.properties")
     Window(
         onCloseRequest = {
             //se cierra la conexion
             dependienteRepositorioJava.close()
+            categoriaRepositorioJava.close()
             exitApplication()},
         title = "VegaBurguer",
     ) {

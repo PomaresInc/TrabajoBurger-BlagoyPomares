@@ -1,5 +1,6 @@
 package ies.sequeros.com.dam.pmdm.administrador.modelo
 import kotlinx.serialization.Serializable
+
 @Serializable
 data class Dependiente(
     var id:String,
