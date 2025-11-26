@@ -224,3 +224,29 @@ nov 21, 2025 5:58:25 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestruct
 INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
 nov 21, 2025 5:58:26 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
 INFORMACIÓN: Ejecutando SQL: delete from dependiente where id=? | Parametros: [id=8df8e738-61ca-4556-b62b-2c550e997f4c]
+nov 21, 2025 6:00:33 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFORMACIÓN: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 21, 2025 6:00:59 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao insert
+INFORMACIÓN: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=99f231a3-2bd5-4240-acc1-115afb000c21, [2]=fesw, [3]=fea@fds, [4]=12345678Aa, [5]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [6]=false, [7]=false]
+nov 21, 2025 6:01:02 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:02 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao update
+INFORMACIÓN: Ejecutando SQL: UPDATE dependiente SET name = ?, email = ?, password = ?, image_path = ?, enabled = ?, is_admin = ? WHERE id = ? | Params: [1]=fesw, [2]=fea@fds, [3]=12345678Aa, [4]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [5]=true, [6]=false, [7]=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao update
+INFORMACIÓN: Ejecutando SQL: UPDATE dependiente SET name = ?, email = ?, password = ?, image_path = ?, enabled = ?, is_admin = ? WHERE id = ? | Params: [1]=fesw, [2]=fea@fds, [3]=12345678Aa, [4]=99f231a3-2bd5-4240-acc1-115afb000c21.jpeg, [5]=false, [6]=false, [7]=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getById
+INFORMACIÓN: Ejecutando SQL: select * from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 21, 2025 6:01:04 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao delete
+INFORMACIÓN: Ejecutando SQL: delete from dependiente where id=? | Parametros: [id=99f231a3-2bd5-4240-acc1-115afb000c21]
+nov 26, 2025 7:56:26 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 26, 2025 8:03:29 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 26, 2025 8:04:51 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao insert
+INFO: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=732229c9-084b-413e-bd60-20ff23c603c6, [2]=Pomares, [3]=javierpomaresgomez@gmail.com, [4]=12345678Aa, [5]=732229c9-084b-413e-bd60-20ff23c603c6.png, [6]=true, [7]=true]
+nov 26, 2025 8:05:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
