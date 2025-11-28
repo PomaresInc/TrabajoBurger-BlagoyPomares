@@ -13,6 +13,8 @@ fun main() = application {
     val dependienteRepositorio: IDependienteRepositorio = BBDDDependienteRepository(dependienteRepositorioJava )
     val categoriaRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
     val categoriaRepositorio: IDependienteRepositorio = BBDDDependienteRepository(categoriaRepositorioJava )
+    val procuctoRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
+    val productoRepositorio: IDependienteRepositorio = BBDDDependienteRepository(procuctoRepositorioJava )
 
     configureExternalLogging("./logging.properties")
     Window(
