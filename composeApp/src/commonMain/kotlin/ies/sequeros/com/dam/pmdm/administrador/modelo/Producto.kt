@@ -6,7 +6,7 @@ data class Producto (
     var id: String,
     var name: String,
     var price: Double,
-    var image_path: String,
+    var imagePath: String,
     var description: String,
     var enabled: Boolean,
     var categoriaId: String
