@@ -4,7 +4,7 @@ import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.toDT
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 
-class BorrarCategoriaUserCase (private val repositorio: ICategoriaRepositorio, private val almacenDatos: AlmacenDatos){
+class BorrarCategoriaUseCase (private val repositorio: ICategoriaRepositorio, private val almacenDatos: AlmacenDatos){
 
         suspend fun invoke(id: String){
             val tempo=repositorio.getById(id)
