@@ -8,7 +8,7 @@ import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import ies.sequeros.com.dam.pmdm.generateUUID
 
 
-class CrearCategoriaUserCase(private val repositorio: ICategoriaRepositorio,private val AlmacenDatos:AlmacenDatos) {
+class CrearCategoriaUseCase(private val repositorio: ICategoriaRepositorio, private val AlmacenDatos:AlmacenDatos) {
 
     suspend fun invoke(createUserCommand: CrearCategoriaCommand): CategoriaDTO {
     if (repositorio.findByName(createUserCommand.name)!=null) {
