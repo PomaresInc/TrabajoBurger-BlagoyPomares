@@ -2,7 +2,7 @@ package ies.sequeros.com.dam.pmdm
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import ies.sequeros.com.dam.pmdm.administrador.infraestructura.BBDDDependienteRepository
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
