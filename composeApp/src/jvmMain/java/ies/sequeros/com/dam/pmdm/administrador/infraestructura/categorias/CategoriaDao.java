@@ -29,11 +29,11 @@ public class CategoriaDao implements IDao<Categoria> {
 
     private final String deletebyid = "delete from " + table_name + " where id=?";
 
-    private final String insert = "INSERT INTO " + table_name + " (id, name) " +
-            "VALUES (?, ?)";
+    private final String insert = "INSERT INTO " + table_name + " (id, name, description, image_path, enabled) " +
+            "VALUES (?, ?, ?, ?, ?)";
 
     private final String update =
-            "UPDATE " + table_name + " SET name = ?" +
+            "UPDATE " + table_name + " SET name = ?, description = ?, image_path = ?, enabled = ? " +
                     "WHERE id = ?";
     public CategoriaDao() {
     }
@@ -98,14 +98,24 @@ public class CategoriaDao implements IDao<Categoria> {
             final PreparedStatement pst =
                     conn.getConnection().prepareStatement(update);
             pst.setString(1, item.getName());
-            Logger logger = Logger.getLogger(DependienteDao.class.getName());
+            pst.setString(2, item.getDescription());
+            pst.setString(3, item.getImagePath());
+            pst.setBoolean(4, item.getEnabled());
+            pst.setString(5, item.getId());
+            pst.executeUpdate();
+            pst.close();
+            Logger logger = Logger.getLogger(CategoriaDao.class.getName());
             logger.info(() ->
                     "Ejecutando SQL: " + update +
                             " | Params: [1]=" + item.getName() +
+                            ", [2]=" + item.getDescription() +
+                            ", [3]=" + item.getImagePath() +
+                            ", [4]=" + item.getEnabled() +
+                            ", [5]=" + item.getId() +
                     "]"
             );
         } catch (final SQLException ex) {
-            Logger.getLogger(DependienteDao.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(CategoriaDao.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
     }
@@ -136,6 +146,9 @@ public class CategoriaDao implements IDao<Categoria> {
                     Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, item.getId());
             pst.setString(2, item.getName());
+            pst.setString(3, item.getDescription());
+            pst.setString(4, item.getImagePath());
+            pst.setBoolean(5, item.getEnabled());
 
             pst.executeUpdate();
             pst.close();
@@ -143,7 +156,10 @@ public class CategoriaDao implements IDao<Categoria> {
             logger.info(() ->
                     "Ejecutando SQL: " + insert +
                             " | Params: [1]=" + item.getId() +
-                            ", [2]="+ item.getName() +
+                            ", [2]=" + item.getName() +
+                            ", [3]=" + item.getDescription() +
+                            ", [4]=" + item.getImagePath() +
+                            ", [5]=" + item.getEnabled() +
                             "]"
             );
         } catch (SQLException e) {
@@ -175,7 +191,10 @@ public class CategoriaDao implements IDao<Categoria> {
         try {
             ct = new Categoria(
                     r.getString("ID"),
-                    r.getString("NAME"));
+                    r.getString("NAME"),
+                    r.getString("DESCRIPTION"),
+                    r.getString("IMAGE_PATH"),
+                    r.getBoolean("ENABLED"));
 
         } catch (final SQLException ex) {
             Logger.getLogger(DependienteDao.class.getName()).log(Level.SEVERE,
@@ -183,4 +202,19 @@ public class CategoriaDao implements IDao<Categoria> {
         }
         return ct;
     }
+     public boolean removeById(String id) {
+            try {
+                Logger logger = Logger.getLogger(CategoriaDao.class.getName());
+                logger.info("Ejecutando SQL: " + deletebyid + " | Parametros: [id=" + id + "]");
+                final PreparedStatement pst = conn.getConnection().prepareStatement(deletebyid);
+                pst.setString(1, id);
+                int affected = pst.executeUpdate();
+                pst.close();
+                return affected > 0;
+            } catch (SQLException e) {
+                Logger.getLogger(CategoriaDao.class.getName()).log(Level.SEVERE,
+                        null, e);
+                return false;
+            }
+        }
 }

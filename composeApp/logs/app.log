@@ -250,3 +250,19 @@ nov 26, 2025 8:04:51 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestruct
 INFO: Ejecutando SQL: INSERT INTO dependiente (id, name, email, password, image_path, enabled, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?) | Params: [1]=732229c9-084b-413e-bd60-20ff23c603c6, [2]=Pomares, [3]=javierpomaresgomez@gmail.com, [4]=12345678Aa, [5]=732229c9-084b-413e-bd60-20ff23c603c6.png, [6]=true, [7]=true]
 nov 26, 2025 8:05:03 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
 INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 27, 2025 8:01:40 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
+nov 27, 2025 8:01:57 P. M. sun.awt.X11.XToolkit processException
+WARNING: Exception on Toolkit thread
+java.lang.NullPointerException: Cannot invoke "sun.awt.X11.XComponentPeer.pSetCursor(java.awt.Cursor)" because the return value of "sun.awt.AWTAccessor$ComponentAccessor.getPeer(java.awt.Component)" is null
+	at java.desktop/sun.awt.X11.XWindow.handleXCrossingEvent(XWindow.java:948)
+	at java.desktop/sun.awt.X11.XComponentPeer.handleXCrossingEvent(XComponentPeer.java:74)
+	at java.desktop/sun.awt.X11.XBaseWindow.dispatchEvent(XBaseWindow.java:1162)
+	at java.desktop/sun.awt.X11.XBaseWindow.dispatchToWindow(XBaseWindow.java:1120)
+	at java.desktop/sun.awt.X11.XToolkit.dispatchEvent(XToolkit.java:622)
+	at java.desktop/sun.awt.X11.XToolkit.run(XToolkit.java:735)
+	at java.desktop/sun.awt.X11.XToolkit.run(XToolkit.java:651)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+nov 28, 2025 6:48:22 P. M. ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.DependienteDao getAll
+INFO: Ejecutando SQL: select * from dependiente | Parametros: 
