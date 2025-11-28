@@ -1,9 +1,8 @@
-package ies.sequeros.com.dam.pmdm.administrador.infraestructura
+package ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente
 
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava
 import ies.sequeros.com.dam.pmdm.administrador.modelo.Dependiente
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
-
 
 class BBDDDependienteRepository(
     private val bbddRepositorioDepedientesJava: BBDDRepositorioDependientesJava

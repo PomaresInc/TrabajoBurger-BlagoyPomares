@@ -4,7 +4,10 @@ USE vegaburguer;
 
 CREATE TABLE categoria(
     id VARCHAR(36) PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(255),
+    image_path VARCHAR(255),
+    enabled BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE dependiente (
