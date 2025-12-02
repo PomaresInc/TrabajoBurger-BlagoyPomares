@@ -46,6 +46,14 @@ public class BBDDRepositorioCategoriaJava {
         return this.dao.getById(id);
     }
 
-    
+    public void close() {
+        try {
+            if (this.db != null) {
+                this.db.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

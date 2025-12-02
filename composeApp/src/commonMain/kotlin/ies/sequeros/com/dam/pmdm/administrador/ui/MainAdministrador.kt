@@ -46,6 +46,9 @@ import ies.sequeros.com.dam.pmdm.administrador.AdministradorViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.Dependientes
 import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.form.DependienteForm
+import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.Categorias
+import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.CategoriasViewModel
+import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.form.CategoriaForm
 
 
 @Suppress("ViewModelConstructorInComposable")
@@ -55,6 +58,7 @@ fun MainAdministrador(
     mainViewModel: MainAdministradorViewModel,
     administradorViewModel: AdministradorViewModel,
     dependientesViewModel: DependientesViewModel,
+    categoriasViewModel: CategoriasViewModel,
 
 
     onExit: () -> Unit
@@ -172,6 +176,24 @@ fun MainAdministrador(
                         navController.popBackStack()
                     },{
                         dependientesViewModel.save(it)
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(AdminRoutes.Categorias){
+                Categorias(mainViewModel, categoriasViewModel, {
+                    categoriasViewModel.setSelectedCategoria(it)
+                    navController.navigate(AdminRoutes.Categoria) {
+                        launchSingleTop = true
+                    }
+                })
+            }
+            composable(AdminRoutes.Categoria){
+                CategoriaForm(
+                    categoriasViewModel, {
+                        navController.popBackStack()
+                    }, {
+                        categoriasViewModel.save(it)
                         navController.popBackStack()
                     }
                 )
