@@ -12,18 +12,13 @@ import java.io.FileInputStream
 import java.util.logging.LogManager
 
 fun main() = application {
-    // Usando repositorio en memoria para dependientes (sin base de datos)
-    val dependienteRepositorio: IDependienteRepositorio = MemDependienteRepository()
-    
+    // Usando base de datos para dependientes
+    val dependienteRepositorioJava = ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava("/app.properties")
+    val dependienteRepositorio: IDependienteRepositorio = ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository(dependienteRepositorioJava)
+
     // Usando base de datos para categorías
     val categoriaRepositorioJava = BBDDRepositorioCategoriaJava("/app.properties")
     val categoriaRepositorio: ICategoriaRepositorio = BBDDCategoriaRepository(categoriaRepositorioJava)
-    
-    // Comentado: Configuración con base de datos para dependientes
-    // val dependienteRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
-    // val dependienteRepositorio: IDependienteRepositorio = BBDDDependienteRepository(dependienteRepositorioJava )
-    // val procuctoRepositorioJava=BBDDRepositorioDependientesJava("/app.properties")
-    // val productoRepositorio: IDependienteRepositorio = BBDDDependienteRepository(procuctoRepositorioJava )
 
     configureExternalLogging("./logging.properties")
     Window(

@@ -13,11 +13,9 @@ import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        //se crea el almacen para el json
-        val almacenDatos:AlmacenDatos=  AlmacenDatos(this)
-        //se le pasa al repositorio
-        val dependienteRepositorio: IDependienteRepositorio =
-            FileDependienteRepository(almacenDatos)
+        // Usando base de datos para dependientes
+        val dependienteRepositorioJava = ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava("/app.properties")
+        val dependienteRepositorio: IDependienteRepositorio = ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository(dependienteRepositorioJava)
 
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
