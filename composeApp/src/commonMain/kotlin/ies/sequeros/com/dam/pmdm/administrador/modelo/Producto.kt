@@ -1,7 +1,7 @@
 package ies.sequeros.com.dam.pmdm.administrador.modelo
 import kotlinx.serialization.Serializable
-@Serializable
 
+@Serializable
 data class Producto (
     var id: String,
     var name: String,
@@ -11,3 +11,10 @@ data class Producto (
     var enabled: Boolean,
     var categoriaId: String
 )
+
+/*
+* BBDD
+*   Crear manualmente una categoria
+*   Asignar en el constructor de producto el id de esa categoria
+*   No hacer en la UI el combobox
+* */

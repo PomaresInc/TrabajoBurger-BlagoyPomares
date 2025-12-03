@@ -1,0 +1,25 @@
+package ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.listar
+
+import ies.sequeros.com.dam.pmdm.administrador.modelo.Producto
+
+
+
+fun Producto.toDTO(path:String="") = ProductoDTO(
+    id = id,
+    name = name,
+    price = price,
+    imagePath = path + imagePath,
+    description = description,
+    enabled = enabled, // enabled , ???
+    categoriaId = categoriaId
+)
+
+fun ProductoDTO.toProducto()= Producto(
+    id = id,
+    name = name,
+    price = price,
+    imagePath = imagePath,
+    description = description,
+    enabled = enabled, // enabled , ???
+    categoriaId = categoriaId
+)

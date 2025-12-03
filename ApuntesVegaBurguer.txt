@@ -1,0 +1,9 @@
+Pedido ViewModel (repositorioProducto, repositorioCategoria, repositorioPedido)
+    lista categoriasTPV Flov    <-  caso uso -> getCategoria
+    pedido Flow                              |
+    fun crearPedido                          -> savePedidos
+    fun addProducto(productoTPVDTO)
+    fun removeUnidadProducto(productoTPVDTO)
+    fun removeProducto(productoD)
+    fun save();
+

@@ -12,10 +12,14 @@ interface IProductoRepositorio {
 
     suspend fun getAll():List<Producto>
 
-    suspend fun findByCategoriaId(categoriaId:String):List<Producto>
+    suspend fun getByCategoria(categoriaId:String):List<Producto>
+
+    suspend fun findByName(name:String):Producto?
+
 
     suspend fun findByProductoId(productoId:String):Producto
 
+    suspend fun getById(id: String): Producto
 
 
 }

@@ -55,9 +55,11 @@ public class BBDDRepositorioProductoJava {
 
     }
 
-    public List<Producto> findByIds(List<String> ids) {
+    public Producto getByCategoria(String categoriaName) {
+        this.dao.getAll();
         return null;
     }
+
 
     public void close() {
         try {
