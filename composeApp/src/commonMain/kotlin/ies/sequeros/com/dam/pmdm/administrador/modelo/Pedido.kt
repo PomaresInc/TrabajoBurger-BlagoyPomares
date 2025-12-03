@@ -5,9 +5,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 
 data class Pedido (
-    var id:String,
-    var fecha: LocalDate,
+    var id: String,
+    var fecha: String,
     var total: Double,
+    var enregado: Boolean,
     var client_name: String,
-    var dependienteId: String,
+    var dependienteId: String
 )

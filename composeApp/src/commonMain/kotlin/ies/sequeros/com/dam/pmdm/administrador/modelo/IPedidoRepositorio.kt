@@ -12,6 +12,6 @@ interface IPedidoRepositorio {
 
     suspend fun getAll():List<Pedido>
 
-    suspend fun findById(ids:List<String>):List<Pedido>
+    suspend fun findById(id: String): Pedido?
 
 }
