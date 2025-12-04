@@ -4,9 +4,12 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.Categoria.BBDDCategoriaRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.categorias.BBDDRepositorioCategoriaJava
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.Pedido.BBDDPedidoRepository
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.pedido.BBDDRepositorioPedidoJava
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.memoria.MemDependienteRepository
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import java.io.FileInputStream
 import java.util.logging.LogManager
@@ -20,17 +23,22 @@ fun main() = application {
     val categoriaRepositorioJava = BBDDRepositorioCategoriaJava("/app.properties")
     val categoriaRepositorio: ICategoriaRepositorio = BBDDCategoriaRepository(categoriaRepositorioJava)
 
+    // Usando base de datos para pedidos
+    val pedidoRepositorioJava = BBDDRepositorioPedidoJava("/app.properties")
+    val pedidoRepositorio: IPedidoRepositorio = BBDDPedidoRepository(pedidoRepositorioJava)
+
     configureExternalLogging("./logging.properties")
     Window(
         onCloseRequest = {
             // Cerrar la conexión a la base de datos
             categoriaRepositorioJava.close()
+            pedidoRepositorioJava.close()
             exitApplication()
         },
         title = "VegaBurguer",
     ) {
         //se envuelve el repositorio en java en uno que exista en Kotlin
-        App(dependienteRepositorio, categoriaRepositorio, AlmacenDatos())
+        App(dependienteRepositorio, categoriaRepositorio, pedidoRepositorio, AlmacenDatos())
     }
 }
 fun configureExternalLogging(path: String) {
