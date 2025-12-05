@@ -49,6 +49,8 @@ import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.form.DependienteF
 import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.Categorias
 import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.CategoriasViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.form.CategoriaForm
+import ies.sequeros.com.dam.pmdm.administrador.ui.pedidos.Pedidos
+import ies.sequeros.com.dam.pmdm.administrador.ui.pedidos.PedidosViewModel
 
 
 @Suppress("ViewModelConstructorInComposable")
@@ -59,6 +61,7 @@ fun MainAdministrador(
     administradorViewModel: AdministradorViewModel,
     dependientesViewModel: DependientesViewModel,
     categoriasViewModel: CategoriasViewModel,
+    pedidosViewModel: PedidosViewModel,
 
 
     onExit: () -> Unit
@@ -118,7 +121,7 @@ fun MainAdministrador(
             ItemOption(
                 Icons.AutoMirrored.Filled.FactCheck,
                 {
-                    navController.navigate(AdminRoutes.Pedido) {
+                    navController.navigate(AdminRoutes.Pedidos) {
                         //
                         launchSingleTop = true
                         popUpTo(AdminRoutes.Main)
@@ -197,6 +200,11 @@ fun MainAdministrador(
                         navController.popBackStack()
                     }
                 )
+            }
+            composable(AdminRoutes.Pedidos){
+                Pedidos(mainViewModel, pedidosViewModel, {
+                    pedidosViewModel.setSelectedPedido(it)
+                })
             }
 
         }

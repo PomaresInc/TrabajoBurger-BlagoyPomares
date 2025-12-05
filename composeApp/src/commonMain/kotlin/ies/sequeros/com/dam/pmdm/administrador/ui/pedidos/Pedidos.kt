@@ -1,4 +1,4 @@
-package ies.sequeros.com.dam.pmdm.administrador.ui.categorias
+package ies.sequeros.com.dam.pmdm.administrador.ui.pedidos
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -6,13 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -29,21 +28,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.CategoriaDTO
+import ies.sequeros.com.dam.pmdm.administrador.aplicacion.pedido.listar.PedidoDTO
 import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministradorViewModel
 
 @Composable
-fun Categorias(
+fun Pedidos(
     mainAdministradorViewModel: MainAdministradorViewModel,
-    categoriasViewModel: CategoriasViewModel,
-    onSelectItem: (CategoriaDTO?) -> Unit
+    pedidosViewModel: PedidosViewModel,
+    onSelectItem: (PedidoDTO?) -> Unit
 ) {
-    val items by categoriasViewModel.items.collectAsState()
+    val items by pedidosViewModel.items.collectAsState()
     var searchText by remember { mutableStateOf("") }
     val filteredItems = items.filter {
         if (searchText.isNotBlank()) {
-            it.name.contains(searchText, ignoreCase = true) || 
-            it.description.contains(searchText, ignoreCase = true)
+            it.client_name.contains(searchText, ignoreCase = true) ||
+            it.fecha.contains(searchText, ignoreCase = true) ||
+            it.id.contains(searchText, ignoreCase = true)
         } else {
             true
         }
@@ -55,7 +55,7 @@ fun Categorias(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        //  Barra superior fija con buscador y botón añadir
+        // Barra superior con buscador y botón refrescar
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -66,7 +66,7 @@ fun Categorias(
                 value = searchText,
                 onValueChange = { searchText = it },
                 shape = RoundedCornerShape(16.dp),
-                placeholder = { Text("Buscar...") },
+                placeholder = { Text("Buscar pedidos...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
                 modifier = Modifier
                     .weight(1f)
@@ -75,39 +75,26 @@ fun Categorias(
             Spacer(Modifier.width(8.dp))
             OutlinedButton(
                 onClick = {
-                    categoriasViewModel.setSelectedCategoria(null)
-                    onSelectItem(null)
+                    pedidosViewModel.refresh()
                 },
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Refrescar"
                 )
             }
         }
-        
+
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 512.dp)
         ) {
             items(filteredItems.size) { index ->
-                CategoriaCard(
+                PedidoCard(
                     filteredItems[index],
-                    onActivate = {
-                        val element = it.copy(enabled = !it.enabled)
-                        categoriasViewModel.switchEnableCategoria(element)
-                    },
-                    onDeactivate = {
-                        val element = it.copy(enabled = !it.enabled)
-                        categoriasViewModel.switchEnableCategoria(element)
-                    },
-                    onView = {},
-                    onEdit = {
-                        onSelectItem(it)
-                    },
-                    onDelete = {
-                        categoriasViewModel.delete(it)
+                    onView = {
+                        pedidosViewModel.setSelectedPedido(filteredItems[index])
+                        onSelectItem(filteredItems[index])
                     }
                 )
             }
