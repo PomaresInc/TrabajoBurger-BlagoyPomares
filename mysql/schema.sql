@@ -36,6 +36,7 @@ CREATE TABLE pedidos(
     id VARCHAR(36) PRIMARY KEY,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DOUBLE NOT NULL,
+    enregado BOOLEAN,
     client_name VARCHAR(100),
     dependienteId VARCHAR(36) NOT NULL,
 

@@ -24,7 +24,7 @@ class CategoriasViewModel(
     private val categoriaRepositorio: ICategoriaRepositorio,
     val almacenDatos: AlmacenDatos
 ) : ViewModel() {
-    //los casos de uso se crean dentro para la recomposición
+
     private val borrarCategoriaUseCase: BorrarCategoriaUseCase
     private val crearCategoriaUseCase: CrearCategoriaUseCase
     private val listarCategoriasUseCase: ListarCategoriaUseCase

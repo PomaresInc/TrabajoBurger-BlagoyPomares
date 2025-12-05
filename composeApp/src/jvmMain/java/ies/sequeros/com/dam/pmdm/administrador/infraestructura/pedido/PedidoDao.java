@@ -20,7 +20,7 @@ public class PedidoDao implements IDao<Pedido> {
 
     private DataBaseConnection conn;
 
-    private final String table_name = "pedidos";
+    private final String table_name = "pedido";
 
     private final String selectall = "select * from " + table_name;
 
