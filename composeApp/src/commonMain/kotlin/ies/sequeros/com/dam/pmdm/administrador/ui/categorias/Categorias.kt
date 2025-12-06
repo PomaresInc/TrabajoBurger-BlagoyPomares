@@ -66,7 +66,7 @@ fun Categorias(
                 value = searchText,
                 onValueChange = { searchText = it },
                 shape = RoundedCornerShape(16.dp),
-                placeholder = { Text("Buscar...") },
+                placeholder = { Text("Buscar Categoria...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
                 modifier = Modifier
                     .weight(1f)
