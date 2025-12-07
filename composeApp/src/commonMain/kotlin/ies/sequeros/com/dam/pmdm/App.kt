@@ -11,6 +11,9 @@ import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
+import ies.sequeros.com.dam.pmdm.tpv.TPV
 import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministrador
 import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministradorViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel
@@ -24,6 +27,8 @@ fun App(
     dependienteRepositorio : IDependienteRepositorio,
     categoriaRepositorio: ICategoriaRepositorio,
     pedidoRepositorio: IPedidoRepositorio,
+    productoRepositorio: IProductoRepositorio,
+    lineaPedidoRepositorio: ILineaPedidoRepositorio,
     almacenImagenes:AlmacenDatos
 ) {
 
@@ -38,7 +43,7 @@ fun App(
         categoriaRepositorio, almacenImagenes
     )}
     val pedidosViewModel = viewModel { PedidosViewModel(
-        pedidoRepositorio, almacenImagenes
+        pedidoRepositorio, lineaPedidoRepositorio, productoRepositorio, almacenImagenes
     )}
 
     appViewModel.setWindowsAdatativeInfo( currentWindowAdaptiveInfo())
@@ -53,13 +58,26 @@ fun App(
             composable(AppRoutes.Main) {
                 Principal({
                     navController.navigate(AppRoutes.Administrador)
-                },{},{})
+                },{
+
+                },{
+                    navController.navigate(AppRoutes.TPV)
+                })
             }
             composable (AppRoutes.Administrador){
                 MainAdministrador(appViewModel,mainViewModel,administradorViewModel,
                     dependientesViewModel,categoriasViewModel,pedidosViewModel,{
                     navController.popBackStack()
                 })
+            }
+            composable(AppRoutes.TPV) {
+                TPV(
+                    categoriaRepositorio = categoriaRepositorio,
+                    productoRepositorio = productoRepositorio,
+                    almacenDatos = almacenImagenes,
+                    pedidoRepositorio = pedidoRepositorio,
+                    lineaPedidoRepositorio = lineaPedidoRepositorio
+                )
             }
 
         }

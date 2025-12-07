@@ -2,20 +2,21 @@ package ies.sequeros.com.dam.pmdm.administrador.aplicacion.pedido.crear
 
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.LineaPedido
 import ies.sequeros.com.dam.pmdm.administrador.modelo.Pedido
-import kotlinx.datetime.Clock
 import java.util.UUID
 
 class CrearPedidoUseCase(
     private val pedidoRepo: IPedidoRepositorio,
-    private val lineaRepo: ILineaPedidoRepositorio
+    private val lineaRepo: ILineaPedidoRepositorio,
+    private val productoRepo: IProductoRepositorio
 ) {
     suspend fun invoke(command: CrearPedidoCommand) {
-        // Crear el pedido
+        // Crear el pedido (la fecha se establece automáticamente en la BD)
         val pedido = Pedido(
             id = UUID.randomUUID().toString(),
-            fecha = Clock.System.now().toString(),
+            fecha = null, // MySQL establecerá la fecha con CURRENT_TIMESTAMP
             total = 0.0,
             enregado = false,
             client_name = command.cliente,
@@ -24,7 +25,9 @@ class CrearPedidoUseCase(
 
         var total = 0.0
         val lineas = command.lineas.map { lineaCmd ->
-            val priceUnit = 0.0
+            // Obtener el precio real del producto desde el repositorio
+            val producto = productoRepo.getById(lineaCmd.productoId)
+            val priceUnit = producto.price
             total += priceUnit * lineaCmd.cantidad
             LineaPedido(
                 id = UUID.randomUUID().toString(),
