@@ -10,7 +10,12 @@ class EliminarPedidoUseCase(
     suspend fun invoke(id: String) {
         val pedido = pedidoRepo.findById(id) ?: return
 
-        lineaRepo.remove(id)
+        // Obtener todas las líneas del pedido y eliminarlas
+        val lineas = lineaRepo.findByPedidoId(id)
+        lineas.forEach { linea ->
+            lineaRepo.remove(linea)
+        }
+        
         pedidoRepo.remove(id)
 
     }

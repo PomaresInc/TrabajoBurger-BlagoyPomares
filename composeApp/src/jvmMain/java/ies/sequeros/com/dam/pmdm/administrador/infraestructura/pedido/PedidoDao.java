@@ -30,11 +30,11 @@ public class PedidoDao implements IDao<Pedido> {
 
     private final String deletebyid = "delete from " + table_name + " where id=?";
 
-    private final String insert = "INSERT INTO " + table_name + " (id, fecha, total, enregado, client_name, dependienteId) " +
-        "VALUES (?, ?, ?, ?, ?, ?)";
+    private final String insert = "INSERT INTO " + table_name + " (id, total, enregado, client_name, dependienteId) " +
+        "VALUES (?, ?, ?, ?, ?)";
 
     private final String update =
-        "UPDATE " + table_name + " SET fecha = ?, total = ?, enregado = ?, client_name = ?, dependienteId = ? " +
+        "UPDATE " + table_name + " SET total = ?, enregado = ?, client_name = ?, dependienteId = ? " +
             "WHERE id = ?";
 
     public PedidoDao() {
@@ -92,23 +92,21 @@ public class PedidoDao implements IDao<Pedido> {
     public void update(Pedido item) {
         try {
             final PreparedStatement pst = conn.getConnection().prepareStatement(update);
-            pst.setString(1, item.getFecha());
-            pst.setDouble(2, item.getTotal());
-            pst.setBoolean(3, item.getEnregado());
-            pst.setString(4, item.getClient_name());
-            pst.setString(5, item.getDependienteId());
-            pst.setString(6, item.getId());
+            pst.setDouble(1, item.getTotal());
+            pst.setBoolean(2, item.getEnregado());
+            pst.setString(3, item.getClient_name());
+            pst.setString(4, item.getDependienteId());
+            pst.setString(5, item.getId());
             pst.executeUpdate();
             pst.close();
             Logger logger = Logger.getLogger(PedidoDao.class.getName());
             logger.info(() ->
                     "Ejecutando SQL: " + update +
-                            " | Params: [1]=" + item.getFecha() +
-                            ", [2]=" + item.getTotal() +
-                            ", [3]=" + item.getEnregado() +
-                            ", [4]=" + item.getClient_name() +
-                            ", [5]=" + item.getDependienteId() +
-                            ", [6]=" + item.getId() +
+                            " | Params: [1]=" + item.getTotal() +
+                            ", [2]=" + item.getEnregado() +
+                            ", [3]=" + item.getClient_name() +
+                            ", [4]=" + item.getDependienteId() +
+                            ", [5]=" + item.getId() +
                             "]"
             );
         } catch (final SQLException ex) {
@@ -136,22 +134,20 @@ public class PedidoDao implements IDao<Pedido> {
         try {
             pst = conn.getConnection().prepareStatement(insert, java.sql.Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, item.getId());
-            pst.setString(2, item.getFecha());
-            pst.setDouble(3, item.getTotal());
-            pst.setBoolean(4, item.getEnregado());
-            pst.setString(5, item.getClient_name());
-            pst.setString(6, item.getDependienteId());
+            pst.setDouble(2, item.getTotal());
+            pst.setBoolean(3, item.getEnregado());
+            pst.setString(4, item.getClient_name());
+            pst.setString(5, item.getDependienteId());
             pst.executeUpdate();
             pst.close();
             Logger logger = Logger.getLogger(PedidoDao.class.getName());
             logger.info(() ->
                     "Ejecutando SQL: " + insert +
                             " | Params: [1]=" + item.getId() +
-                            ", [2]=" + item.getFecha() +
-                            ", [3]=" + item.getTotal() +
-                            ", [4]=" + item.getEnregado() +
-                            ", [5]=" + item.getClient_name() +
-                            ", [6]=" + item.getDependienteId() +
+                            ", [2]=" + item.getTotal() +
+                            ", [3]=" + item.getEnregado() +
+                            ", [4]=" + item.getClient_name() +
+                            ", [5]=" + item.getDependienteId() +
                             "]"
             );
         } catch (SQLException e) {

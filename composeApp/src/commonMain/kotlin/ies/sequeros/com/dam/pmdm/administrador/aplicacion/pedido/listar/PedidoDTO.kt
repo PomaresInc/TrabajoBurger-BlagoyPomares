@@ -6,5 +6,6 @@ class PedidoDTO (
     var total: Double,
     var enregado: Boolean,
     var client_name: String,
-    var dependienteId: String
+    var dependienteId: String,
+    var lineas: List<LineaPedidoDTO> = emptyList()
 )
