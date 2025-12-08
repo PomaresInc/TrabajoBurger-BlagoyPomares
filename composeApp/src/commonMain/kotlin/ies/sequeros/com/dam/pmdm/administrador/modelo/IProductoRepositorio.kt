@@ -17,9 +17,9 @@ interface IProductoRepositorio {
     suspend fun findByName(name:String):Producto?
 
 
-    suspend fun findByProductoId(productoId:String):Producto
+    suspend fun findByProductoId(productoId:String):Producto?
 
-    suspend fun getById(id: String): Producto
+    suspend fun getById(id: String): Producto?
 
 
 }

@@ -31,7 +31,7 @@ public class ProductoDao implements IDao<Producto>{
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private final String update =
-            "UPDATE " + table_name + " SET name = ?, price = ?, image_path = ?, description = ?, enabled = ?, is_admin = ? " +
+            "UPDATE " + table_name + " SET name = ?, price = ?, image_path = ?, description = ?, enabled = ?, categoriaId = ? " +
                     "WHERE id = ?";
 
     public ProductoDao() {
@@ -123,12 +123,12 @@ public class ProductoDao implements IDao<Producto>{
             final PreparedStatement pst =
                     conn.getConnection().prepareStatement(update);
             pst.setString(1, item.getName());
-            pst.setDouble(2, Double.parseDouble(item.getPrice()));// Convierto el String a Double
+            pst.setDouble(2, Double.parseDouble(item.getPrice()));
             pst.setString(3, item.getImagePath());
             pst.setString(4, item.getDescription());
             pst.setBoolean(5, item.getEnabled());
-            pst.setString(6, item.getId());
-            pst.setString(7, item.getCategoriaId());
+            pst.setString(6, item.getCategoriaId());
+            pst.setString(7, item.getId());
             pst.executeUpdate();
             pst.close();
             Logger logger = Logger.getLogger(ProductoDao.class.getName());
@@ -139,8 +139,8 @@ public class ProductoDao implements IDao<Producto>{
                             ", [3]=" + item.getImagePath() +
                             ", [4]=" + item.getDescription() +
                             ", [5]=" + item.getEnabled() +
-                            ", [6]=" + item.getId() +
-                            ", [7]=" + item.getCategoriaId() +
+                            ", [6]=" + item.getCategoriaId() +
+                            ", [7]=" + item.getId() +
                             "]"
             );
         } catch (final SQLException ex) {
@@ -177,24 +177,24 @@ public class ProductoDao implements IDao<Producto>{
         try {
             pst = conn.getConnection().prepareStatement(insert,
                     Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, item.getName());
-            pst.setDouble(2, Double.parseDouble(item.getPrice()));
-            pst.setString(3, item.getImagePath());
-            pst.setString(4, item.getDescription());
-            pst.setBoolean(5, item.getEnabled());
-            pst.setString(6, item.getId());
+            pst.setString(1, item.getId());
+            pst.setString(2, item.getName());
+            pst.setDouble(3, Double.parseDouble(item.getPrice()));
+            pst.setString(4, item.getImagePath());
+            pst.setString(5, item.getDescription());
+            pst.setBoolean(6, item.getEnabled());
             pst.setString(7, item.getCategoriaId());
             pst.executeUpdate();
             pst.close();
             Logger logger = Logger.getLogger(ProductoDao.class.getName());
             logger.info(() ->
-                    "Ejecutando SQL: " + update +
-                            " | Params: [1]=" + item.getName() +
-                            ", [2]=" + item.getPrice() +
-                            ", [3]=" + item.getImagePath() +
-                            ", [4]=" + item.getDescription() +
-                            ", [5]=" + item.getEnabled() +
-                            ", [6]=" + item.getId() +
+                    "Ejecutando SQL: " + insert +
+                            " | Params: [1]=" + item.getId() +
+                            ", [2]=" + item.getName() +
+                            ", [3]=" + item.getPrice() +
+                            ", [4]=" + item.getImagePath() +
+                            ", [5]=" + item.getDescription() +
+                            ", [6]=" + item.getEnabled() +
                             ", [7]=" + item.getCategoriaId() +
                             "]"
             );
