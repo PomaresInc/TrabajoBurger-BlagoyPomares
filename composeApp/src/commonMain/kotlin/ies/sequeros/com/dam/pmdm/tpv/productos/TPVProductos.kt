@@ -223,7 +223,7 @@ private fun ProductoCard(
             Spacer(modifier = Modifier.height(8.dp))
             
             Text(
-                text = "${String.format("%.2f", producto.price)}€",
+                text = "${String.format("%.2f", producto.price.toDouble())}€",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

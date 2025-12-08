@@ -157,9 +157,13 @@ public class PedidoDao implements IDao<Pedido> {
     private Pedido registerToObject(final ResultSet r) {
         Pedido sc = null;
         try {
+            // Leer DATETIME y convertir a String
+            java.sql.Timestamp ts = r.getTimestamp("FECHA");
+            String fechaStr = (ts != null) ? ts.toString() : null;
+            
             sc = new Pedido(
                 r.getString("ID"),
-                r.getString("FECHA"),
+                fechaStr,
                 r.getDouble("TOTAL"),
                 r.getBoolean("ENREGADO"),
                 r.getString("CLIENT_NAME"),
