@@ -11,12 +11,10 @@ public class BBDDRepositorioPedidoJava {
 
     private PedidoDao dao;
 
-    public BBDDRepositorioPedidoJava(String path) throws Exception {
+    public BBDDRepositorioPedidoJava(DataBaseConnection connection) throws Exception {
         super();
-        this.db = new DataBaseConnection();
-        this.db.setConfig_path(path);
-        this.db.open();
-        dao= new PedidoDao();
+        this.db = connection;
+        dao = new PedidoDao();
         dao.setConn(this.db);
     }
 

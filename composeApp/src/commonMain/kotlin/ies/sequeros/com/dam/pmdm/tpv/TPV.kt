@@ -17,6 +17,8 @@ import ies.sequeros.com.dam.pmdm.tpv.productos.TPVProductos
 import ies.sequeros.com.dam.pmdm.tpv.productos.TPVProductosViewModel
 import ies.sequeros.com.dam.pmdm.tpv.carrito.TPVCarritoViewModel
 import ies.sequeros.com.dam.pmdm.tpv.carrito.TPVCarrito
+import ies.sequeros.com.dam.pmdm.tpv.pago.TPVPago
+import ies.sequeros.com.dam.pmdm.tpv.confirmacion.TPVConfirmacion
 @Suppress("ViewModelConstructorInComposable")
 @Composable
 fun TPV(
@@ -75,6 +77,17 @@ fun TPV(
                 onVerCarrito = {
                     navController.navigate(TPVRoutes.CARRITO)
                 },
+                onConfirmarPedido = {
+                    if (cantidadProductos > 0) {
+                        navController.navigate(TPVRoutes.CARRITO)
+                    }
+                },
+                onCancelarPedido = {
+                    carritoViewModel.vaciarCarrito()
+                    navController.navigate(TPVRoutes.CLIENTE) {
+                        popUpTo(TPVRoutes.CLIENTE) { inclusive = true }
+                    }
+                },
                 onBack = {
                     navController.popBackStack()
                 }
@@ -102,6 +115,17 @@ fun TPV(
                 },
                 onVerCarrito = {
                     navController.navigate(TPVRoutes.CARRITO)
+                },
+                onConfirmarPedido = {
+                    if (cantidadProductos > 0) {
+                        navController.navigate(TPVRoutes.CARRITO)
+                    }
+                },
+                onCancelarPedido = {
+                    carritoViewModel.vaciarCarrito()
+                    navController.navigate(TPVRoutes.CLIENTE) {
+                        popUpTo(TPVRoutes.CLIENTE) { inclusive = true }
+                    }
                 },
                 onBack = {
                     navController.popBackStack()
@@ -132,6 +156,12 @@ fun TPV(
                                 popUpTo(TPVRoutes.CLIENTE) { inclusive = true }
                             }
                         }
+                    }
+                },
+                onCancelarPedido = {
+                    carritoViewModel.vaciarCarrito()
+                    navController.navigate(TPVRoutes.CLIENTE) {
+                        popUpTo(TPVRoutes.CLIENTE) { inclusive = true }
                     }
                 },
                 onBack = {

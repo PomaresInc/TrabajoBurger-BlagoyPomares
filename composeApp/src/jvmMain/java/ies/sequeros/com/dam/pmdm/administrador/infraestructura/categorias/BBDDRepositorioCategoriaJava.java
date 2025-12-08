@@ -11,12 +11,10 @@ public class BBDDRepositorioCategoriaJava {
 
     private CategoriaDao dao;
 
-    public BBDDRepositorioCategoriaJava(String path) throws Exception {
+    public BBDDRepositorioCategoriaJava(DataBaseConnection connection) throws Exception {
         super();
-        this.db = new DataBaseConnection();
-        this.db.setConfig_path(path);
-        this.db.open();
-        dao= new CategoriaDao();
+        this.db = connection;
+        dao = new CategoriaDao();
         dao.setConn(this.db);
     }
 

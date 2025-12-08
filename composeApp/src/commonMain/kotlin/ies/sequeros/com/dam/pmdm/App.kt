@@ -19,6 +19,7 @@ import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministradorViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.CategoriasViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.pedidos.PedidosViewModel
+import ies.sequeros.com.dam.pmdm.administrador.ui.productos.ProductosViewModel
 
 @Suppress("ViewModelConstructorInComposable")
 @Composable
@@ -45,6 +46,9 @@ fun App(
     val pedidosViewModel = viewModel { PedidosViewModel(
         pedidoRepositorio, lineaPedidoRepositorio, productoRepositorio, almacenImagenes
     )}
+    val productosViewModel = viewModel { ProductosViewModel(
+        productoRepositorio, almacenImagenes
+    ) }
 
     appViewModel.setWindowsAdatativeInfo( currentWindowAdaptiveInfo())
     val navController= rememberNavController()
@@ -66,7 +70,7 @@ fun App(
             }
             composable (AppRoutes.Administrador){
                 MainAdministrador(appViewModel,mainViewModel,administradorViewModel,
-                    dependientesViewModel,categoriasViewModel,pedidosViewModel,{
+                    dependientesViewModel,categoriasViewModel,pedidosViewModel, productosViewModel ,{
                     navController.popBackStack()
                 })
             }

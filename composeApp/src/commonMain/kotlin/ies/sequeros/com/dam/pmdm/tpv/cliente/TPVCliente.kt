@@ -32,7 +32,7 @@ fun TPVCliente(
         )
 
         Text(
-            text = "Por favor, introduce tu nombre para continuar",
+            text = "Por favor, introduce tu nombre para comenzar el pedido",
             fontSize = 18.sp,
             modifier = Modifier.padding(bottom = 24.dp)
         )
@@ -41,6 +41,7 @@ fun TPVCliente(
             value = clientName,
             onValueChange = { viewModel.onClientNameChange(it) },
             label = { Text("Nombre del cliente") },
+            placeholder = { Text("Introduce tu nombre") },
             isError = clientNameError != null,
             supportingText = {
                 clientNameError?.let { error ->
@@ -59,6 +60,7 @@ fun TPVCliente(
         Button(
             onClick = {
                 if (viewModel.isValid()) {
+                    viewModel.iniciarPedido()
                     onContinuar(clientName)
                 }
             },
@@ -68,7 +70,7 @@ fun TPVCliente(
             enabled = clientName.isNotBlank()
         ) {
             Text(
-                text = "Continuar",
+                text = "Comenzar Pedido",
                 fontSize = 18.sp
             )
         }
