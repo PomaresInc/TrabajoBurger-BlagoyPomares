@@ -21,6 +21,8 @@ class CrearPedidoUseCase(
         val lineasParaGuardar = command.lineas.map { lineaCmd ->
             // Obtener el precio real del producto
             val producto = productoRepo.getById(lineaCmd.productoId)
+            // Manejo de error null
+                ?: throw IllegalArgumentException("Producto con ID '${lineaCmd.productoId}' no encontrado")
 
             // 1. Cálculos precisos en BigDecimal
             val priceUnitBD = producto.price.toBigDecimal()

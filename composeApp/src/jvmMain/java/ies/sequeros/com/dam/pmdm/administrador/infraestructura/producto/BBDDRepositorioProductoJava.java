@@ -45,7 +45,7 @@ public class BBDDRepositorioProductoJava {
     }
 
     public Producto findByName(String name) {
-        return null;
+        return this.dao.findByName(name);
     }
 
     public Producto getById(String id) {
