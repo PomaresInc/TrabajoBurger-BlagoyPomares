@@ -21,7 +21,7 @@ class ProductoFormViewModel (private val item: ProductoDTO?,
         imagePath = item?.imagePath?:"",
         categoria = item?.categoriaId?:"",
         description = item?.description?:"",
-        price = item?.price?:0.0
+        price = item?.price?:""
 
     ))
     val uiState: StateFlow<ProductoFormState> = _uiState.asStateFlow()
@@ -69,7 +69,7 @@ class ProductoFormViewModel (private val item: ProductoDTO?,
         )
     }
 
-    fun onPriceChange(v: Double) {
+    fun onPriceChange(v: String) {
         _uiState.value = _uiState.value.copy(
             price =  v
         )
@@ -101,8 +101,8 @@ class ProductoFormViewModel (private val item: ProductoDTO?,
         return null
     }
 
-    private fun validatePrice (price: Double): String? {
-        if (price <= 0) return "El precio debe ser mayor que 0"
+    private fun validatePrice (price: String): String? {
+        if (price <= 0.toString()) return "El precio debe ser mayor que 0"
         return null
     }
 
@@ -111,29 +111,25 @@ class ProductoFormViewModel (private val item: ProductoDTO?,
         return null
     }
 
-    fun onAdminChange(v: Boolean) {
-        _uiState.value = _uiState.value.copy(
-            isadmin =   v
-
-        )
-    }
-
     private fun validateAll(): Boolean {
         val s = _uiState.value
         val nombreErr = validateNombre(s.name)
         val imageErr=validateImagePath(s.imagePath)
         val categoriaErr=validateCategoria(s.categoria)
+        val priceErr = validatePrice(s.price)
+        val descriptionErr = validateDescription(s.description)
+
         val newState = s.copy(
             nombreError = nombreErr,
             imagePathError = imageErr,
             categoriaError = categoriaErr,
-            priceError = validatePrice(s.price) as Double?,
-            descriptionError = validateDescription(s.description),
+            priceError = priceErr,
+            descriptionError = descriptionErr,
 
             submitted = true
         )
         _uiState.value = newState
-        return listOf(nombreErr, imageErr, categoriaErr).all { it == null }
+        return listOf(nombreErr, imageErr, categoriaErr, priceErr, descriptionErr).all { it == null }
     }
 
     // se le pasan lambdas para ejecutar código en caso de éxito o error

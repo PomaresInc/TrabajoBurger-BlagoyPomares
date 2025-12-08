@@ -3,7 +3,7 @@ package ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.listar
 data class ProductoDTO(
     val name: String,
     val id: String,
-    val price: Double,
+    val price: String,
     val imagePath: String,
     val description: String,
     val categoriaId: String,

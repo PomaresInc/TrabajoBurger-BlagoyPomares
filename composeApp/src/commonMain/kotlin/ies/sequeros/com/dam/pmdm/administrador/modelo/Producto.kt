@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 data class Producto (
     var id: String,
     var name: String,
-    var price: Double,
+    var price: String,
     var imagePath: String,
     var description: String,
     var enabled: Boolean,

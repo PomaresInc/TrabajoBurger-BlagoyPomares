@@ -1,19 +1,13 @@
 package ies.sequeros.com.dam.pmdm.tpv.carrito
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import ies.sequeros.com.dam.pmdm.tpv.carrito.TPVCarritoItem
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.Pedido
 import ies.sequeros.com.dam.pmdm.administrador.modelo.LineaPedido
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import java.util.UUID
 
 class TPVCarritoViewModel(
@@ -35,7 +29,7 @@ class TPVCarritoViewModel(
         _cantidadTotalProductos.value = _items.value.sumOf { it.cantidad }
     }
 
-    fun agregarProducto(productoId: String, nombre: String, precio: Double, imagePath: String) {
+    fun agregarProducto(productoId: String, nombre: String, precio: String, imagePath: String) {
         val itemsActuales = _items.value.toMutableList()
         val itemExistente = itemsActuales.find { it.productoId == productoId }
 
@@ -47,7 +41,7 @@ class TPVCarritoViewModel(
                 TPVCarritoItem(
                     productoId = productoId,
                     nombre = nombre,
-                    precio = precio,
+                    precio = precio.toDouble(),
                     imagePath = imagePath
                 )
             )
@@ -97,14 +91,14 @@ class TPVCarritoViewModel(
             // Generar ID único para el pedido
             val pedidoId = UUID.randomUUID().toString()
 
-            // Crear el pedido (la fecha se establece automáticamente en la BD)
+            // Crear el pedido
             val pedido = Pedido(
                 id = pedidoId,
-                fecha = null, // MySQL establecerá la fecha con CURRENT_TIMESTAMP
+                fecha = null,
                 total = _totalCarrito.value,
                 enregado = false,
                 client_name = nombreCliente,
-                dependienteId = "TPV" // ID por defecto para pedidos desde TPV
+                dependienteId = "TPV"
             )
 
             // Guardar el pedido
@@ -121,8 +115,6 @@ class TPVCarritoViewModel(
                 )
                 lineaPedidoRepositorio.add(lineaPedido)
             }
-
-            // Vaciar el carrito después de guardar
             vaciarCarrito()
 
             println("Pedido guardado exitosamente: $pedidoId")

@@ -123,7 +123,7 @@ public class ProductoDao implements IDao<Producto>{
             final PreparedStatement pst =
                     conn.getConnection().prepareStatement(update);
             pst.setString(1, item.getName());
-            pst.setDouble(2, item.getPrice());
+            pst.setDouble(2, Double.parseDouble(item.getPrice()));// Convierto el String a Double
             pst.setString(3, item.getImagePath());
             pst.setString(4, item.getDescription());
             pst.setBoolean(5, item.getEnabled());
@@ -178,7 +178,7 @@ public class ProductoDao implements IDao<Producto>{
             pst = conn.getConnection().prepareStatement(insert,
                     Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, item.getName());
-            pst.setDouble(2, item.getPrice());
+            pst.setDouble(2, Double.parseDouble(item.getPrice()));
             pst.setString(3, item.getImagePath());
             pst.setString(4, item.getDescription());
             pst.setBoolean(5, item.getEnabled());
@@ -214,7 +214,7 @@ public class ProductoDao implements IDao<Producto>{
             sc=new Producto(
                     r.getString("id"),
                     r.getString("name"),
-                    r.getDouble("price"),
+                    String.valueOf(r.getDouble("price")), // Convierto el número de la BBDD a String para el objeto
                     r.getString("image_path"),
                     r.getString("description"),
                     r.getBoolean("enabled"),

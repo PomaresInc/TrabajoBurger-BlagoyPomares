@@ -1,9 +1,7 @@
 package ies.sequeros.com.dam.pmdm.administrador.infraestructura.lineapedido;
 
 
-import ies.sequeros.com.dam.pmdm.administrador.infraestructura.pedido.PedidoDao;
 import ies.sequeros.com.dam.pmdm.administrador.modelo.LineaPedido;
-import ies.sequeros.com.dam.pmdm.administrador.modelo.Pedido;
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.DataBaseConnection;
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.IDao;
 
