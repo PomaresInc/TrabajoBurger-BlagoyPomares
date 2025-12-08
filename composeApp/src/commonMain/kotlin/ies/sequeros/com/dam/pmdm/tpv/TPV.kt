@@ -17,8 +17,6 @@ import ies.sequeros.com.dam.pmdm.tpv.productos.TPVProductos
 import ies.sequeros.com.dam.pmdm.tpv.productos.TPVProductosViewModel
 import ies.sequeros.com.dam.pmdm.tpv.carrito.TPVCarritoViewModel
 import ies.sequeros.com.dam.pmdm.tpv.carrito.TPVCarrito
-import ies.sequeros.com.dam.pmdm.tpv.pago.TPVPago
-import ies.sequeros.com.dam.pmdm.tpv.confirmacion.TPVConfirmacion
 @Suppress("ViewModelConstructorInComposable")
 @Composable
 fun TPV(
@@ -151,7 +149,8 @@ fun TPV(
                     scope.launch {
                         val exito = carritoViewModel.guardarPedido(clientName)
                         if (exito) {
-                            // Volver a la pantalla principal después de guardar
+                            // Vaciar carrito y volver al inicio
+                            carritoViewModel.vaciarCarrito()
                             navController.navigate(TPVRoutes.CLIENTE) {
                                 popUpTo(TPVRoutes.CLIENTE) { inclusive = true }
                             }

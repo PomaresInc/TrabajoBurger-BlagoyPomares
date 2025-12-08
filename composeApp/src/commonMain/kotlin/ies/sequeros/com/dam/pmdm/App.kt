@@ -20,6 +20,8 @@ import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.DependientesViewM
 import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.CategoriasViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.pedidos.PedidosViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.ProductosViewModel
+import ies.sequeros.com.dam.pmdm.administrador.ui.login.LoginAdministrador
+import ies.sequeros.com.dam.pmdm.administrador.ui.login.LoginAdministradorViewModel
 
 @Suppress("ViewModelConstructorInComposable")
 @Composable
@@ -61,12 +63,26 @@ fun App(
         ) {
             composable(AppRoutes.Main) {
                 Principal({
-                    navController.navigate(AppRoutes.Administrador)
+                    navController.navigate(AppRoutes.LoginAdmin)
                 },{
 
                 },{
                     navController.navigate(AppRoutes.TPV)
                 })
+            }
+            composable(AppRoutes.LoginAdmin) {
+                val loginViewModel = remember { LoginAdministradorViewModel(dependienteRepositorio) }
+                LoginAdministrador(
+                    viewModel = loginViewModel,
+                    onLoginExitoso = {
+                        navController.navigate(AppRoutes.Administrador) {
+                            popUpTo(AppRoutes.Main)
+                        }
+                    },
+                    onCancelar = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable (AppRoutes.Administrador){
                 MainAdministrador(appViewModel,mainViewModel,administradorViewModel,

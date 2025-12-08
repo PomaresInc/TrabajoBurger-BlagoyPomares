@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.CategoriaDTO
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TPVCategorias(
     clientName: String,
@@ -38,11 +37,24 @@ fun TPVCategorias(
     val categorias by viewModel.categorias.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Header simple sin TopAppBar
+        Surface(
+            shadowElevation = 4.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
+                    }
+                    Column(modifier = Modifier.padding(start = 8.dp)) {
                         Text(
                             text = "VegaBurguer",
                             fontSize = 18.sp,
@@ -54,95 +66,36 @@ fun TPVCategorias(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
-                    }
-                },
-                actions = {
-                    Column(
-                        horizontalAlignment = Alignment.End,
+                }
+                
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Total: %.2f€".format(totalCarrito),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(end = 8.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Total: %.2f€".format(totalCarrito),
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                            IconButton(onClick = onVerCarrito) {
-                                BadgedBox(
-                                    badge = if (cantidadProductosCarrito > 0) {
-                                        { Badge { Text("$cantidadProductosCarrito") } }
-                                    } else {
-                                        { }
-                                    }
-                                ) {
-                                    Icon(Icons.Default.ShoppingCart, "Ver carrito")
-                                }
+                    )
+                    Box {
+                        IconButton(onClick = onVerCarrito) {
+                            Icon(Icons.Default.ShoppingCart, "Carrito")
+                        }
+                        if (cantidadProductosCarrito > 0) {
+                            Badge(
+                                modifier = Modifier.align(Alignment.TopEnd)
+                            ) {
+                                Text("$cantidadProductosCarrito")
                             }
                         }
-                        Text(
-                            text = "Cliente: $clientName",
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            Surface(
-                shadowElevation = 8.dp,
-                tonalElevation = 3.dp
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = onCancelarPedido,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error
-                        )
-                    ) {
-                        Text(
-                            text = "Cancelar Pedido",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    
-                    Button(
-                        onClick = onConfirmarPedido,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        enabled = cantidadProductosCarrito > 0
-                    ) {
-                        Text(
-                            text = "Confirmar Pedido",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
                     }
                 }
             }
         }
-    ) { paddingValues ->
+        
+        // Contenido principal
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+                .fillMaxWidth()
+                .weight(1f)
         ) {
             when {
                 isLoading -> {
@@ -172,6 +125,50 @@ fun TPVCategorias(
                             )
                         }
                     }
+                }
+            }
+        }
+        
+        // Footer simple sin bottomBar
+        Surface(
+            shadowElevation = 8.dp,
+            tonalElevation = 3.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                OutlinedButton(
+                    onClick = onCancelarPedido,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                ) {
+                    Text(
+                        text = "Cancelar Pedido",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                
+                Button(
+                    onClick = onConfirmarPedido,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    enabled = cantidadProductosCarrito > 0
+                ) {
+                    Text(
+                        text = "Confirmar Pedido",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
