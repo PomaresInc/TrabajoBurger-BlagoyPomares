@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +38,11 @@ fun Pedidos(
     pedidosViewModel: PedidosViewModel,
     onSelectItem: (PedidoDTO?) -> Unit
 ) {
+    // Actualizar la lista cuando se muestra la pantalla
+    LaunchedEffect(Unit) {
+        pedidosViewModel.refresh()
+    }
+    
     val items by pedidosViewModel.items.collectAsState()
     var searchText by remember { mutableStateOf("") }
     val filteredItems = items.filter {
