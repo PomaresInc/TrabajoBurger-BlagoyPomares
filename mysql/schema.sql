@@ -40,7 +40,7 @@ CREATE TABLE pedido(
     client_name VARCHAR(100),
     dependienteId VARCHAR(36) NOT NULL,
 
-    CONSTRAINT fk_pedidos_dependiente FOREIGN KEY (dependienteId) REFERENCES dependiente(id)
+    CONSTRAINT fk_pedido_dependiente FOREIGN KEY (dependienteId) REFERENCES dependiente(id)
 );
 
 CREATE TABLE lin_ped(

@@ -11,7 +11,8 @@ fun Producto.toDTO(path:String="") = ProductoDTO(
     imagePath = path + imagePath,
     description = description,
     enabled = enabled, // enabled , ???
-    categoriaId = categoriaId
+    categoriaId = categoriaId,
+    isAdmin = false
 )
 
 fun ProductoDTO.toProducto()= Producto(
