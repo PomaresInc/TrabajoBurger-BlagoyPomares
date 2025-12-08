@@ -47,6 +47,7 @@ fun main() = application {
     val lineaPedidoRepositorioJava = BBDDRepositorioLineaPedidoJava(dbConnection)
     val lineaPedidoRepositorio: ILineaPedidoRepositorio = BBDDLienaPedidoRepository(lineaPedidoRepositorioJava)
 
+
     configureExternalLogging("./logging.properties")
     Window(
         onCloseRequest = {
