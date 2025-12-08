@@ -14,7 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TPVCarrito(
     clientName: String,
@@ -26,92 +25,38 @@ fun TPVCarrito(
     onCancelarPedido: () -> Unit,
     onBack: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Column {
-                        Text("Detalle del Pedido")
-                        Text(
-                            "Cliente: $clientName",
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            Surface(
-                shadowElevation = 8.dp,
-                tonalElevation = 3.dp
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Header simple
+        Surface(
+            shadowElevation = 4.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("Total:", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        Text(
-                            "%.2f€".format(total),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        OutlinedButton(
-                            onClick = onCancelarPedido,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(56.dp),
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text(
-                                text = "Cancelar",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        
-                        Button(
-                            onClick = onConfirmarPedido,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(56.dp),
-                            enabled = items.isNotEmpty()
-                        ) {
-                            Text(
-                                text = "Confirmar Pedido",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
+                IconButton(onClick = onBack) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
+                }
+                Column(modifier = Modifier.padding(start = 8.dp)) {
+                    Text("Detalle del Pedido", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        "Cliente: $clientName",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
         }
-    ) { paddingValues ->
+        
+        // Contenido principal
         if (items.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -131,7 +76,9 @@ fun TPVCarrito(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -141,6 +88,69 @@ fun TPVCarrito(
                         onCantidadChange = { onCantidadChange(item.productoId, it) },
                         onEliminar = { onEliminar(item.productoId) }
                     )
+                }
+            }
+        }
+        
+        // Footer simple
+        Surface(
+            shadowElevation = 8.dp,
+            tonalElevation = 3.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("Total:", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        "%.2f€".format(total),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onCancelarPedido,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(56.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error
+                        )
+                    ) {
+                        Text(
+                            text = "Cancelar",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    
+                    Button(
+                        onClick = onConfirmarPedido,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(56.dp),
+                        enabled = items.isNotEmpty()
+                    ) {
+                        Text(
+                            text = "Confirmar Pedido",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }
