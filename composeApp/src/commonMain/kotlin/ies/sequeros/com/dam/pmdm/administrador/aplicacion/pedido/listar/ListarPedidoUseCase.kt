@@ -9,7 +9,7 @@ class ListarPedidoUseCase(
     private val repositorio: IPedidoRepositorio,
     private val lineaRepositorio: ILineaPedidoRepositorio,
     private val productoRepositorio: IProductoRepositorio,
-    private val almacenDatos: AlmacenDatos
+    val almacenDatos: AlmacenDatos
 ) {
     suspend fun invoke(): List<PedidoDTO> {
         val pedidos = repositorio.getAll()

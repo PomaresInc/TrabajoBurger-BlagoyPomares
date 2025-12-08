@@ -17,37 +17,41 @@ import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
+import ies.sequeros.com.dam.pmdm.commons.infraestructura.DataBaseConnection
 import java.io.FileInputStream
 import java.util.logging.LogManager
 
 fun main() = application {
+    // Crear la conexión a la base de datos
+    val dbConnection = DataBaseConnection()
+    dbConnection.setConfig_path("/app.properties")
+    dbConnection.open()
+    
     // Usando base de datos para dependientes
-    val dependienteRepositorioJava = ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava("/app.properties")
+    val dependienteRepositorioJava = ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava(dbConnection)
     val dependienteRepositorio: IDependienteRepositorio = ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository(dependienteRepositorioJava)
 
     // Usando base de datos para categorías
-    val categoriaRepositorioJava = BBDDRepositorioCategoriaJava("/app.properties")
+    val categoriaRepositorioJava = BBDDRepositorioCategoriaJava(dbConnection)
     val categoriaRepositorio: ICategoriaRepositorio = BBDDCategoriaRepository(categoriaRepositorioJava)
 
     // Usando base de datos para pedidos
-    val pedidoRepositorioJava = BBDDRepositorioPedidoJava("/app.properties")
+    val pedidoRepositorioJava = BBDDRepositorioPedidoJava(dbConnection)
     val pedidoRepositorio: IPedidoRepositorio = BBDDPedidoRepository(pedidoRepositorioJava)
 
     // Usando base de datos para productos
-    val productoRepositorioJava = BBDDRepositorioProductoJava("/app.properties")
+    val productoRepositorioJava = BBDDRepositorioProductoJava(dbConnection)
     val productoRepositorio: IProductoRepositorio = BBDDProductoRepository(productoRepositorioJava)
 
     // Usando base de datos para líneas de pedido
-    val lineaPedidoRepositorioJava = BBDDRepositorioLineaPedidoJava("/app.properties")
+    val lineaPedidoRepositorioJava = BBDDRepositorioLineaPedidoJava(dbConnection)
     val lineaPedidoRepositorio: ILineaPedidoRepositorio = BBDDLienaPedidoRepository(lineaPedidoRepositorioJava)
 
     configureExternalLogging("./logging.properties")
     Window(
         onCloseRequest = {
             // Cerrar la conexión a la base de datos
-            categoriaRepositorioJava.close()
-            pedidoRepositorioJava.close()
-            productoRepositorioJava.close()
+            dbConnection.close()
             exitApplication()
         },
         title = "VegaBurguer",

@@ -10,12 +10,10 @@ public class BBDDRepositorioProductoJava {
     private final DataBaseConnection db;
     private ProductoDao dao;
     
-    public BBDDRepositorioProductoJava(String path) throws Exception {
+    public BBDDRepositorioProductoJava(DataBaseConnection connection) throws Exception {
         super();
-        this.db = new DataBaseConnection();
-        this.db.setConfig_path(path);
-        this.db.open();
-        dao= new ProductoDao();
+        this.db = connection;
+        dao = new ProductoDao();
         dao.setConn(this.db);
     }
     

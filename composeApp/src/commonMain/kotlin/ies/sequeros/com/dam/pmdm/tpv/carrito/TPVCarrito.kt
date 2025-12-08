@@ -23,12 +23,22 @@ fun TPVCarrito(
     onCantidadChange: (String, Int) -> Unit,
     onEliminar: (String) -> Unit,
     onConfirmarPedido: () -> Unit,
+    onCancelarPedido: () -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Carrito - $clientName") },
+                title = { 
+                    Column {
+                        Text("Detalle del Pedido")
+                        Text(
+                            "Cliente: $clientName",
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
@@ -61,14 +71,39 @@ fun TPVCarrito(
                     
                     Spacer(modifier = Modifier.height(16.dp))
                     
-                    Button(
-                        onClick = onConfirmarPedido,
-                        modifier = Modifier.fillMaxWidth().height(56.dp),
-                        enabled = items.isNotEmpty()
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Icon(Icons.Default.ShoppingCart, null)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Confirmar Pedido", fontSize = 18.sp)
+                        OutlinedButton(
+                            onClick = onCancelarPedido,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(56.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error
+                            )
+                        ) {
+                            Text(
+                                text = "Cancelar",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        
+                        Button(
+                            onClick = onConfirmarPedido,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(56.dp),
+                            enabled = items.isNotEmpty()
+                        ) {
+                            Text(
+                                text = "Confirmar Pedido",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }
