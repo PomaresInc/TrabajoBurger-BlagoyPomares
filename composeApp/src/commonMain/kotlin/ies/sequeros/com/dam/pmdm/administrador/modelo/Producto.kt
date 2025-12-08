@@ -11,10 +11,3 @@ data class Producto (
     var enabled: Boolean,
     var categoriaId: String
 )
-
-/*
-* BBDD
-*   Crear manualmente una categoria
-*   Asignar en el constructor de producto el id de esa categoria
-*   No hacer en la UI el combobox
-* */
