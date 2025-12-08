@@ -32,14 +32,14 @@ CREATE TABLE producto (
     CONSTRAINT fk_producto_categoria FOREIGN KEY (categoriaId) REFERENCES categoria(id)
 );
 
-CREATE TABLE pedidos(
+CREATE TABLE pedido(
     id VARCHAR(36) PRIMARY KEY,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DOUBLE NOT NULL,
     client_name VARCHAR(100),
     dependienteId VARCHAR(36) NOT NULL,
 
-    CONSTRAINT fk_pedidos_dependiente FOREIGN KEY (dependienteId) REFERENCES dependiente(id)
+    CONSTRAINT fk_pedido_dependiente FOREIGN KEY (dependienteId) REFERENCES dependiente(id)
 );
 
 CREATE TABLE lin_ped(
@@ -49,6 +49,6 @@ CREATE TABLE lin_ped(
     pedidoId VARCHAR(36) NOT NULL,
     productoId VARCHAR(36) NOT NULL,
 
-    CONSTRAINT fk_linped_pedido FOREIGN KEY (pedidoId) REFERENCES pedidos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_linped_pedido FOREIGN KEY (pedidoId) REFERENCES pedido(id) ON DELETE CASCADE,
     CONSTRAINT fk_linped_producto FOREIGN KEY (productoId) REFERENCES producto(id)
 );
