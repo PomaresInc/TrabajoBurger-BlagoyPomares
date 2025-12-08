@@ -152,7 +152,7 @@ fun PedidoCard(
                                 modifier = Modifier.weight(1f)
                             )
                             Text(
-                                text = "€${String.format("%.2f", linea.precioUnitario * linea.unidades)}",
+                                text = "€${String.format("%.2f", linea.precioUnitario.toBigDecimal() * linea.unidades.toBigDecimal())}",
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary

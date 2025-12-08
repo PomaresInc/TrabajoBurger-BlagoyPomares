@@ -47,7 +47,7 @@ fun App(
         pedidoRepositorio, lineaPedidoRepositorio, productoRepositorio, almacenImagenes
     )}
     val productosViewModel = viewModel { ProductosViewModel(
-        productoRepositorio, almacenImagenes
+        productoRepositorio, categoriaRepositorio, almacenImagenes
     ) }
 
     appViewModel.setWindowsAdatativeInfo( currentWindowAdaptiveInfo())

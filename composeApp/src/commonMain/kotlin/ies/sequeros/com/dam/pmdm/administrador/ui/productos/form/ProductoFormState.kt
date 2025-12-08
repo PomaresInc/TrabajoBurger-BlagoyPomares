@@ -4,16 +4,16 @@ data class ProductoFormState (
     val name: String = "",
     val enabled: Boolean = false,
     val imagePath:String="default",
-    val price: Double = 0.0,
+    val price: String="",
     val description: String = "",
     val categoria: String = "", // categoriaId?
-    val isadmin: Boolean  = false,
+
 
     // errores (null = sin error)
     val nombreError: String? = null,
     val imagePathError: String? = null,
     val categoriaError: String? = null,
-    val priceError: Double? = null,
+    val priceError: String? = null,
     val descriptionError: String? = null,
 
 

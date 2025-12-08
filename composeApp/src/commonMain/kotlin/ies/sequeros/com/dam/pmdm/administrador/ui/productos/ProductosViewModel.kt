@@ -1,12 +1,9 @@
 package ies.sequeros.com.dam.pmdm.administrador.ui.productos
 
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ies.sequeros.com.dam.pmdm.administrador.aplicacion.dependientes.actualizar.ActualizarDependienteCommand
-import ies.sequeros.com.dam.pmdm.administrador.aplicacion.dependientes.cambiarpermisos.CambiarPermisosCommand
-import ies.sequeros.com.dam.pmdm.administrador.aplicacion.dependientes.listar.DependienteDTO
-
+import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.CategoriaDTO
+import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.ListarCategoriaUseCase
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.BorrarProductoUseCase
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.activar.ActivarProductoCommand
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.activar.ActivarProductoUseCase
@@ -16,14 +13,10 @@ import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.crear.CrearP
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.crear.CrearProductoUseCase
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.listar.ProductoDTO
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.listar.ListarProductoUseCase
-import ies.sequeros.com.dam.pmdm.administrador.infraestructura.memoria.FileDependienteRepository
-import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
-import ies.sequeros.com.dam.pmdm.administrador.modelo.Dependiente
-import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
-import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministradorViewModel
-import ies.sequeros.com.dam.pmdm.administrador.ui.dependientes.form.DependienteFormState
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.form.ProductoFormState
+import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +26,8 @@ import kotlinx.coroutines.launch
 
 class ProductosViewModel (
     private val productoRepositorio: IProductoRepositorio,
-            val almacenDatos: AlmacenDatos
+    private val categoriaRepositorio: ICategoriaRepositorio, // Para listar categorías
+    val almacenDatos: AlmacenDatos
 ): ViewModel() {
     // los casos de uso se crean dentro para la recomposición
     private val borrarProductoUseCase: BorrarProductoUseCase
@@ -41,11 +35,16 @@ class ProductosViewModel (
     private val listarProductoUseCase: ListarProductoUseCase
     private val actualizarProductoUseCase: ActualizarProductoUseCase
     private val activarProductoUseCase: ActivarProductoUseCase
+    private val listarCategoriasUseCase: ListarCategoriaUseCase // UseCase para categorías
 
     private val _items = MutableStateFlow<MutableList<ProductoDTO>>(mutableListOf())
     val items: StateFlow<List<ProductoDTO>> = _items.asStateFlow()
     private val _selected = MutableStateFlow<ProductoDTO?>(null)
     val selected = _selected.asStateFlow()
+
+    // AÑADIDO: Estado para la lista del ComboBox
+    private val _categorias = MutableStateFlow<List<CategoriaDTO>>(emptyList())
+    val categorias: StateFlow<List<CategoriaDTO>> = _categorias.asStateFlow()
 
     init {
         actualizarProductoUseCase = ActualizarProductoUseCase(productoRepositorio,almacenDatos)
@@ -53,16 +52,27 @@ class ProductosViewModel (
         crearProductoUseCase = CrearProductoUseCase(productoRepositorio,almacenDatos)
         listarProductoUseCase = ListarProductoUseCase(productoRepositorio,almacenDatos)
         activarProductoUseCase = ActivarProductoUseCase(productoRepositorio,almacenDatos)
+
+        listarCategoriasUseCase = ListarCategoriaUseCase(categoriaRepositorio,almacenDatos)
+
         viewModelScope.launch {
+            // Cargar productos
             var items = listarProductoUseCase.invoke()
             _items.value.clear()
             _items.value.addAll(items)
 
+            // Cargar categorías para el ComboBox
+            val listaCategorias = listarCategoriasUseCase.invoke()
+            _categorias.value = listaCategorias
         }
     }
 
     fun setSelectedProducto(item: ProductoDTO?){
         _selected.value = item
+    }
+
+    fun onPriceChange(newPrice: String) {
+        _selected.value = _selected.value?.copy(price = newPrice)
     }
 
     fun switchEnableProducto(item: ProductoDTO) {
@@ -98,32 +108,35 @@ class ProductosViewModel (
 
 
     fun add(formState: ProductoFormState) {
-        val command = CrearProductoCommand (
-            formState.price,
-            formState.name,
-            formState.description,
-            formState.imagePath,
-            formState.categoria,
-            formState.enabled,
+
+        val command = CrearProductoCommand(
+            price = formState.price,
+            name = formState.name,
+            description = formState.description,
+            imagePath = formState.imagePath,
+            categoriaId = formState.categoria,
+            enabled = formState.enabled,
         )
         viewModelScope.launch {
             try {
-                val user = crearProductoUseCase.invoke(command)
-                _items.value = (_items.value + user) as MutableList<ProductoDTO>
-            }catch (e:Exception){
-                throw  e
-
+                val producto = crearProductoUseCase.invoke(command)
+                _items.value = (_items.value + producto) as MutableList<ProductoDTO>
+            } catch (e: Exception) {
+                throw e
             }
         }
     }
 
     fun update(formState: ProductoFormState) {
+
         val command = ActualizarProductoCommand(
-            selected.value!!.id!!,
-            formState.name,
-            formState.description,
-            formState.imagePath,
-            formState.enabled
+            id = selected.value!!.id!!,
+            price = formState.price,
+            name = formState.name,
+            description = formState.description,
+            imagePath = formState.imagePath,
+            enabled = formState.enabled,
+            categoria = formState.categoria
         )
         viewModelScope.launch {
             val item = actualizarProductoUseCase.invoke(command)
@@ -131,8 +144,6 @@ class ProductosViewModel (
                 current.map { if (it.id == item.id) item else it } as MutableList<ProductoDTO>
             }
         }
-
-
     }
 
     fun save(item: ProductoFormState) {
@@ -143,33 +154,3 @@ class ProductosViewModel (
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

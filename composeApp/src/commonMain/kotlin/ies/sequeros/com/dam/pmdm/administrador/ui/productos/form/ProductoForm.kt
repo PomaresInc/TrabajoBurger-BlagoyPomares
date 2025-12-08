@@ -16,21 +16,22 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
-import androidx.compose.material.icons.filled.CheckCircleOutline
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PersonOutline
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.EuroSymbol
+import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -40,25 +41,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+// Importamos el DTO de Categoría
+import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.CategoriaDTO
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.ProductosViewModel
 import ies.sequeros.com.dam.pmdm.commons.ui.ImagenDesdePath
 import ies.sequeros.com.dam.pmdm.commons.ui.SelectorImagenComposable
 
 import vegaburguer.composeapp.generated.resources.Res
 import vegaburguer.composeapp.generated.resources.hombre
-
-
-
 
 @Composable
 fun ProductoForm (
@@ -74,6 +71,10 @@ fun ProductoForm (
     val state by productoFormularioViewModel.uiState.collectAsState()
     val formValid by productoFormularioViewModel.isFormValid.collectAsState()
     val selected = productosViewModel.selected.collectAsState()
+
+    // Obtener categorias del viewmodel
+    val categoriasDisponibles by productosViewModel.categorias.collectAsState()
+
     val imagePath =
         remember { mutableStateOf(if (state.imagePath != null && state.imagePath.isNotEmpty()) state.imagePath else "") }
 
@@ -81,10 +82,10 @@ fun ProductoForm (
     val scrollState = rememberScrollState()
 
     Surface (
-       modifier = Modifier
-           .fillMaxWidth()
-           .padding(16.dp)
-           .defaultMinSize(minHeight = 200.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .defaultMinSize(minHeight = 200.dp),
         tonalElevation = 4.dp,
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surface
@@ -102,30 +103,31 @@ fun ProductoForm (
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Person,
+                    imageVector = Icons.Default.ShoppingCart,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(40.dp)
                 )
                 Text(
-                    text = if (selected == null)
-                        "Crear nuevo usuario"
+                    text = if (selected.value == null)
+                        "Añadir producto"
                     else
-                        "Editar usuario",
+                        "Editar producto",
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp)) // Espacio antes del botón
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Campos
+            // Nombre
             OutlinedTextField(
                 value = state.name,
                 onValueChange = { productoFormularioViewModel.onNombreChange(it) },
-                label = { Text("Nombre completo") },
-                leadingIcon = { Icon(Icons.Default.PersonOutline, contentDescription = null) },
+                label = { Text("Nombre del producto") },
+                leadingIcon = { Icon(Icons.Default.Label, contentDescription = null) },
                 isError = state.nombreError != null,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
             )
             state.nombreError?.let {
                 Text(
@@ -134,6 +136,45 @@ fun ProductoForm (
                     color = MaterialTheme.colorScheme.error
                 )
             }
+
+            // Precio
+            OutlinedTextField(
+                value = state.price,
+                onValueChange = {
+                    productoFormularioViewModel.onPriceChange(it)
+                },
+                label = { Text("Precio (€)") },
+                leadingIcon = { Icon(Icons.Default.EuroSymbol, contentDescription = null) },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            )
+
+            // Descripción
+            OutlinedTextField(
+                value = state.description,
+                onValueChange = {
+                    productoFormularioViewModel.onDescriptionChange(it)
+                },
+                label = { Text("Descripción") },
+                leadingIcon = { Icon(Icons.Default.Description, contentDescription = null) },
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 3
+            )
+
+
+            // Buscamos el objeto categoría completo que coincida con el ID guardado en el estado
+            val currentCategoria = categoriasDisponibles.find { it.id == state.categoria }
+
+            CategoriasComboBox(
+                categorias = categoriasDisponibles,
+                current = currentCategoria,
+                onSelect = { nuevaCategoria ->
+                    // Llamamos al viewModel del formulario para actualizar el ID
+                    productoFormularioViewModel.onCategoriaChange(nuevaCategoria.id)
+                }
+            )
+
             // Checkboxes
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -141,21 +182,14 @@ fun ProductoForm (
                         checked = state.enabled,
                         onCheckedChange = { productoFormularioViewModel.onEnabledChange(it) }
                     )
-                    Text("Activo", style = MaterialTheme.typography.bodyMedium)
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = state.isadmin,
-                        onCheckedChange = { productoFormularioViewModel.onAdminChange(it) }
-                    )
-                    Text("Administrador", style = MaterialTheme.typography.bodyMedium)
+                    Text("Producto Activo", style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
-            Text("Selecciona una imagen:", style = MaterialTheme.typography.titleSmall)
+            Text("Imagen del producto:", style = MaterialTheme.typography.titleSmall)
 
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
-            val scope = rememberCoroutineScope()
+
             SelectorImagenComposable({ it: String ->
                 productoFormularioViewModel.onImagePathChange(it)
                 imagePath.value = it
@@ -164,6 +198,7 @@ fun ProductoForm (
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
 
             ImagenDesdePath(imagePath, Res.drawable.hombre, Modifier.fillMaxSize())
+
             state.imagePathError?.let {
                 Text(
                     it,
@@ -181,8 +216,6 @@ fun ProductoForm (
             ) {
                 FilledTonalButton(onClick = { productoFormularioViewModel.clear() }) {
                     Icon(Icons.Default.Autorenew, contentDescription = null)
-                    //Spacer(Modifier.width(6.dp))
-                    //Text("Limpiar")
                 }
 
                 Button(
@@ -197,39 +230,58 @@ fun ProductoForm (
                     enabled = formValid
                 ) {
                     Icon(Icons.Default.Save, contentDescription = null)
-                    // Spacer(Modifier.width(6.dp))
-                    //Text("" + formValid.toString())
                 }
 
                 FilledTonalButton(onClick = { onClose() }) {
                     Icon(Icons.Default.Close, contentDescription = null)
-                    //Spacer(Modifier.width(6.dp))
-                    //Text("Cancelar")
                 }
             }
-
         }
     }
 }
 
+// Combobox
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CategoriasComboBox(
+    categorias: List<CategoriaDTO>,
+    current: CategoriaDTO?,
+    onSelect: (CategoriaDTO) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
 
+    val displayText = current?.name ?: ""
 
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = it }
+    ) {
+        OutlinedTextField(
+            value = displayText,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Categoría") },
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+        )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.exposedDropdownSize()
+        ) {
+            categorias.forEach { categoria ->
+                DropdownMenuItem(
+                    text = { Text(categoria.name) },
+                    onClick = {
+                        onSelect(categoria)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}

@@ -13,7 +13,7 @@ class ListarPedidoUseCase(
 ) {
     suspend fun invoke(): List<PedidoDTO> {
         val pedidos = repositorio.getAll()
-        
+
         return pedidos.map { pedido ->
             val lineas = lineaRepositorio.findByPedidoId(pedido.id)
             val lineasDTO = lineas.mapNotNull { linea ->
@@ -23,17 +23,17 @@ class ListarPedidoUseCase(
                         LineaPedidoDTO(
                             productoNombre = producto.name,
                             unidades = linea.unidades,
-                            precioUnitario = linea.priceUnit
+                            // Convertimos el Double a String para el DTO
+                            precioUnitario = linea.priceUnit.toString()
                         )
                     } else {
                         null
                     }
                 } catch (e: Exception) {
-                    // Si el producto no existe, omitir esta línea
                     null
                 }
             }
-            
+
             pedido.toDTO().apply {
                 this.lineas = lineasDTO
             }
