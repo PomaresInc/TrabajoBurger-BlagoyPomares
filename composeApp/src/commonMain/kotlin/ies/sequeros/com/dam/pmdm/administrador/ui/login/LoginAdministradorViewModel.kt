@@ -39,7 +39,6 @@ class LoginAdministradorViewModel(
             _usuario.value.isBlank() || _contrasena.value.isBlank() -> {
                 _mensajeError.value = "Completa todos los campos"
             }
-            // Validación rápida sin BD para admin/admin
             _usuario.value.trim().lowercase() == "admin" && _contrasena.value == "admin" -> {
                 onSuccess()
             }
