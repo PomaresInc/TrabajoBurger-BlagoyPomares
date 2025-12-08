@@ -16,11 +16,14 @@ class CrearCategoriaUseCase(private val repositorio: ICategoriaRepositorio, priv
     }
         val id = generateUUID()
 
+        // Copiar la imagen al directorio de categorías
+        val nuevaImagePath = AlmacenDatos.copy(createUserCommand.imagePath, id, "/categorias/")
+
         val item = Categoria(
             id = id,
             name = createUserCommand.name,
             description = createUserCommand.description,
-            imagePath = createUserCommand.imagePath,
+            imagePath = nuevaImagePath,
             enabled = createUserCommand.enabled
         )
         val element=repositorio.findByName(item.name)

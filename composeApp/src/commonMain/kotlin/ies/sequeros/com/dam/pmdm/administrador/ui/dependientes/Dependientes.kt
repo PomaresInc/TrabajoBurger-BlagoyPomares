@@ -59,7 +59,7 @@ fun Dependientes(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // 🔹 Barra superior fija con buscador y botón añadir
+        //  Barra superior fija con buscador y botón añadir
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -70,7 +70,7 @@ fun Dependientes(
                 value = searchText,
                 onValueChange = { searchText = it },
                 shape = RoundedCornerShape(16.dp),
-                placeholder = { Text("Buscar...") },
+                placeholder = { Text("Buscar dependiente...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription ="Search" ) },
                 modifier = Modifier
                     .weight(1f)

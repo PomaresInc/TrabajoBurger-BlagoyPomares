@@ -26,29 +26,24 @@ class BBDDProductoRepository (
     }
 
     override suspend fun getAll(): List<Producto> {
-        bbddRepositorioProductoJava.getAll()
         return bbddRepositorioProductoJava.getAll()
     }
 
     override suspend fun getByCategoria(categoriaId: String): List<Producto> {
-        bbddRepositorioProductoJava.getAll()
         return bbddRepositorioProductoJava.getAll()
+            .filter { it.categoriaId == categoriaId }
     }
 
     override suspend fun findByName(name: String): Producto? {
-        bbddRepositorioProductoJava.getAll()
-        return bbddRepositorioProductoJava.getAll() as Producto?
+        return bbddRepositorioProductoJava.findByName(name)
     }
 
     override suspend fun findByProductoId(productoId: String): Producto {
-        bbddRepositorioProductoJava.getAll()
-        return bbddRepositorioProductoJava.getAll() as Producto
+        return bbddRepositorioProductoJava.getById(productoId)
     }
 
     override suspend fun getById(id: String): Producto {
-        bbddRepositorioProductoJava.getAll()
-        return bbddRepositorioProductoJava.getAll() as Producto
-
+        return bbddRepositorioProductoJava.getById(id)
     }
 
 

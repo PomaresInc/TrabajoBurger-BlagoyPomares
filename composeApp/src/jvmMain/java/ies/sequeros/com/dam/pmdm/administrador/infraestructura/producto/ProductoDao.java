@@ -212,13 +212,13 @@ public class ProductoDao implements IDao<Producto>{
         try {
 
             sc=new Producto(
-                    r.getString("ID"),
-                    r.getString("NAME"),
-                    r.getDouble("PRICE"),
-                    r.getString("IMAGEPATH"),
-                    r.getString("DESCRIPTION"),
-                    r.getBoolean("ENABLED"),
-                    r.getString("CATEGORIAID"));
+                    r.getString("id"),
+                    r.getString("name"),
+                    r.getDouble("price"),
+                    r.getString("image_path"),
+                    r.getString("description"),
+                    r.getBoolean("enabled"),
+                    r.getString("categoriaId"));
             return sc;
         } catch (final SQLException ex) {
             Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE,

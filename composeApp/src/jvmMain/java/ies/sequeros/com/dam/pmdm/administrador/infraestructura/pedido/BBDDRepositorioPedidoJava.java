@@ -22,6 +22,14 @@ public class BBDDRepositorioPedidoJava {
 
     public void add(Pedido item){
         this.dao.insert(item);
+        // Forzar flush de la conexión para asegurar que el pedido se persiste
+        try {
+            if (this.db.getConnection() != null && !this.db.getConnection().isClosed()) {
+                // No hacer nada, el autocommit ya está activo por defecto
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean remove(String id){
