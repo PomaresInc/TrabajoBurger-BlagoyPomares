@@ -47,13 +47,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ies.sequeros.com.dam.pmdm.administrador.ui.categorias.CategoriasViewModel
+
 
 // Importamos el DTO de Categoría
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.categorias.listar.CategoriaDTO
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.ProductosViewModel
 import ies.sequeros.com.dam.pmdm.commons.ui.ImagenDesdePath
 import ies.sequeros.com.dam.pmdm.commons.ui.SelectorImagenComposable
-
+import androidx.compose.runtime.LaunchedEffect
 import vegaburguer.composeapp.generated.resources.Res
 import vegaburguer.composeapp.generated.resources.hombre
 
@@ -74,6 +76,11 @@ fun ProductoForm (
 
     // Obtener categorias del viewmodel
     val categoriasDisponibles by productosViewModel.categorias.collectAsState()
+
+    // Recargar categorías automáticamente al entrar en la pantalla
+    LaunchedEffect(Unit) {
+        productosViewModel.recargarCategorias()
+    }
 
     val imagePath =
         remember { mutableStateOf(if (state.imagePath != null && state.imagePath.isNotEmpty()) state.imagePath else "") }
