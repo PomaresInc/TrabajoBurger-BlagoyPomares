@@ -56,19 +56,128 @@ fun ProductoCard (
     item: ProductoDTO,
     onActivate: (item:ProductoDTO) -> Unit,
     onDeactivate: (item:ProductoDTO) -> Unit,
-    onView: () -> Unit,
     onEdit: (ProductoDTO) -> Unit,
     onDelete: (item: ProductoDTO) -> Unit,
-    onChangeAdmin: (item:ProductoDTO) -> Unit,
 ) {
     val cardAlpha by animateFloatAsState(if (item.enabled)1f else 0.5f)
     val imagePath = mutableStateOf(if(item.imagePath!=null && item.imagePath.isNotEmpty()) item.imagePath else "")
     val borderColor = when {
-        item.isAdmin -> MaterialTheme.colorScheme.primary
+        item.isAdmin -> MaterialTheme.colorScheme.primary // quitar??
         !item.enabled -> MaterialTheme.colorScheme.outline
         else -> MaterialTheme.colorScheme.secondary
     }
 
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .alpha(cardAlpha),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+        ),
+        border = BorderStroke(1.dp, borderColor)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(90.dp)
+                    .clip(CircleShape)
+                    .border(3.dp, borderColor, CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                ImagenDesdePath(imagePath, Res.drawable.hombre, Modifier.fillMaxWidth())
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = item.name,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = "${item.price} €",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AssistChip(
+                    onClick = {},
+                    label = { Text(if (item.enabled) "Activo" else "Inactivo") },
+                    leadingIcon = {
+                        Icon(
+                            if (item.enabled) Icons.Default.CheckCircle else Icons.Default.Block,
+                            contentDescription = null,
+                            tint = if (item.enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        )
+                    },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                )
+            }
+            HorizontalDivider(
+                Modifier.fillMaxWidth(0.8f),
+                DividerDefaults.Thickness, MaterialTheme.colorScheme.outlineVariant
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // isenabled
+                OutlinedIconButton(
+                    onClick = {
+                        if (item.enabled) {
+                            onDeactivate(item) // deactivate
+                        } else {
+                            onActivate(item)   // activate
+                        }
+                    },
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = if (item.enabled)
+                            MaterialTheme.colorScheme.errorContainer
+                        else
+                            MaterialTheme.colorScheme.secondaryContainer
+                    )
+                ) {
+                    Icon(
+                        if (item.enabled) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = if (item.enabled) "Desactivar" else "Activar"
+                    )
+                }
+
+                OutlinedIconButton(onClick = { onEdit(item) }) {
+                    Icon(Icons.Default.Edit, contentDescription = "Editar")
+                }
+
+                OutlinedIconButton(
+                    onClick = { onDelete(item) },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                ) {
+                    Icon(Icons.Default.Delete, contentDescription = "Eliminar")
+                }
+            }
+        }
+    }
+
+    /*
     Card (
         modifier = Modifier
             .padding(8.dp)
@@ -100,14 +209,14 @@ fun ProductoCard (
                 ImagenDesdePath(imagePath, Res.drawable.hombre, Modifier.fillMaxWidth())
             }
 
-            // Nombre y TODO ver como hacer para el combobox de categoría
+            // Nombre
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text (
                     text = item.name,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                // ¿Categoria?
+
             }
             // Estado (isEnabled)
             Row (
@@ -201,6 +310,8 @@ fun ProductoCard (
 
         }
     }
+
+     */
 }
 
 

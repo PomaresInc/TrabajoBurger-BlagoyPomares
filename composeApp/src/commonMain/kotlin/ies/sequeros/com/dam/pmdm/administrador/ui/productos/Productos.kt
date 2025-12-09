@@ -55,81 +55,69 @@ fun Productos (
     }
 
     // Contenedor principal
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
+                .padding(bottom = 16.dp)
         ) {
             OutlinedTextField(
                 value = searchText,
                 onValueChange = { searchText = it },
                 shape = RoundedCornerShape(16.dp),
-                placeholder = { Text("Buscar..." ) },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search" ) },
+                placeholder = { Text("Buscar producto...") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
                 modifier = Modifier
                     .weight(1f)
-                    .padding(8.dp)
+                    .padding(end = 8.dp)
             )
-            Spacer (Modifier.width(8.dp))
-            OutlinedButton (
+            OutlinedButton(
                 onClick = {
                     productosViewModel.setSelectedProducto(null)
                     onSelectItem(null)
-
                 },
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
-
-            ) { Icon (
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add",
-                modifier = Modifier
-                    .size(ButtonDefaults.IconSize)
-            ) }
-
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive (
-                    minSize = 512.dp
-                )
             ) {
-                items(filteredItems.size) { item ->
-                    ProductoCard(filteredItems.get(item),
-                        {
-
-                            val element=it.copy(
-                                enabled = !it.enabled
-                            )
-                            productosViewModel.switchEnableProducto(element)
-                        },{
-
-                            val element=it.copy(
-                                enabled = !it.enabled
-                            )
-                            productosViewModel.switchEnableProducto(element)
-                        },{},{
-                            onSelectItem(it);
-
-                        },{
-                            productosViewModel.delete(it)
-                        },
-                        {
-                            val element=it.copy(
-                                isAdmin = !it.isAdmin
-                            )
-
-
-
-
-                        })
-
-                }
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Añadir",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
             }
+        }
 
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(
+                minSize = 512.dp
+            )
+        ) {
+            items(filteredItems.size) { item ->
+                // para las lambdas separadas
+                ProductoCard(
+                    item = filteredItems[item],
+                    onActivate = { producto ->
+                        // activate
+                        val updatedProduct = producto.copy(enabled = true)
+                        productosViewModel.switchEnableProducto(updatedProduct)
+                    },
+                    onDeactivate = { producto ->
+                        // deactivate
+                        val updatedProduct = producto.copy(enabled = false)
+                        productosViewModel.switchEnableProducto(updatedProduct)
+                    },
+                    onEdit = {
+                        onSelectItem(it)
+                    },
+                    onDelete = {
+                        productosViewModel.delete(it)
+                    }
+                )
+            }
         }
     }
     // nombre, categoria(combobox), activo, imagen, eliminar, precio.

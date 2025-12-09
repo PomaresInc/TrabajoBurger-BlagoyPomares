@@ -38,11 +38,11 @@ class BBDDProductoRepository (
         return bbddRepositorioProductoJava.findByName(name)
     }
 
-    override suspend fun findByProductoId(productoId: String): Producto {
+    override suspend fun findByProductoId(productoId: String): Producto? {
         return bbddRepositorioProductoJava.getById(productoId)
     }
 
-    override suspend fun getById(id: String): Producto {
+    override suspend fun getById(id: String): Producto? {
         return bbddRepositorioProductoJava.getById(id)
     }
 

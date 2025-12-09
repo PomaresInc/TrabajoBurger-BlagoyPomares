@@ -37,10 +37,7 @@ class TPVProductosViewModel(
                 _productos.value = todosProductos
                     .filter { it.enabled }
                     .map { 
-                        it.toDTO(
-                            if (it.imagePath.isEmpty()) "" 
-                            else almacenDatos.getAppDataDir() + "/productos/"
-                        )
+                        it.toDTO(almacenDatos.getAppDataDir() + "/productos/")
                     }
             } catch (e: Exception) {
                 _productos.value = emptyList()

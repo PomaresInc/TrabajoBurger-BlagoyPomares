@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import ies.sequeros.com.dam.pmdm.administrador.aplicacion.productos.listar.ProductoDTO
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TPVProductos(
     categoriaNombre: String,
@@ -38,54 +37,29 @@ fun TPVProductos(
     val productos by viewModel.productos.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Header simple
+        Surface(
+            shadowElevation = 4.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
+                    }
+                    Column(modifier = Modifier.padding(start = 8.dp)) {
                         Text(
                             text = "VegaBurguer",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
-                        Text(
-                            text = restaurantAddress,
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Volver")
-                    }
-                },
-                actions = {
-                    Column(
-                        horizontalAlignment = Alignment.End,
-                        modifier = Modifier.padding(end = 8.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Total: %.2f€".format(totalCarrito),
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                            IconButton(onClick = onVerCarrito) {
-                                BadgedBox(
-                                    badge = if (cantidadProductosCarrito > 0) {
-                                        { Badge { Text("$cantidadProductosCarrito") } }
-                                    } else {
-                                        { }
-                                    }
-                                ) {
-                                    Icon(Icons.Default.ShoppingCart, "Ver carrito")
-                                }
-                            }
-                        }
                         Text(
                             text = categoriaNombre,
                             fontSize = 12.sp,
@@ -93,56 +67,35 @@ fun TPVProductos(
                         )
                     }
                 }
-            )
-        },
-        bottomBar = {
-            Surface(
-                shadowElevation = 8.dp,
-                tonalElevation = 3.dp
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = onCancelarPedido,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error
-                        )
-                    ) {
-                        Text(
-                            text = "Cancelar Pedido",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    
-                    Button(
-                        onClick = onConfirmarPedido,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        enabled = cantidadProductosCarrito > 0
-                    ) {
-                        Text(
-                            text = "Confirmar Pedido",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Total: %.2f€".format(totalCarrito),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Box {
+                        IconButton(onClick = onVerCarrito) {
+                            Icon(Icons.Default.ShoppingCart, "Carrito")
+                        }
+                        if (cantidadProductosCarrito > 0) {
+                            Badge(
+                                modifier = Modifier.align(Alignment.TopEnd)
+                            ) {
+                                Text("$cantidadProductosCarrito")
+                            }
+                        }
                     }
                 }
             }
         }
-    ) { paddingValues ->
+        
+        // Contenido principal
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+                .fillMaxWidth()
+                .weight(1f)
         ) {
             when {
                 isLoading -> {
@@ -172,6 +125,50 @@ fun TPVProductos(
                             )
                         }
                     }
+                }
+            }
+        }
+        
+        // Footer simple
+        Surface(
+            shadowElevation = 8.dp,
+            tonalElevation = 3.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                OutlinedButton(
+                    onClick = onCancelarPedido,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                ) {
+                    Text(
+                        text = "Cancelar Pedido",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                
+                Button(
+                    onClick = onConfirmarPedido,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    enabled = cantidadProductosCarrito > 0
+                ) {
+                    Text(
+                        text = "Confirmar Pedido",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
@@ -226,7 +223,7 @@ private fun ProductoCard(
             Spacer(modifier = Modifier.height(8.dp))
             
             Text(
-                text = "${String.format("%.2f", producto.price)}€",
+                text = "${String.format("%.2f", producto.price.toDouble())}€",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
