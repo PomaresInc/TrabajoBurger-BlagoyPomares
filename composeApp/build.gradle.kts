@@ -24,7 +24,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation("com.google.android.gms:play-services-location:21.3.0")
-
+            // añadir librería bcrypt para android
+            implementation("org.mindrot:jbcrypt:0.4")
 
         }
         commonMain.dependencies {
@@ -60,6 +61,8 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
             // implementation("org.apache.derby:derby:10.16.1.1") // Derby desactivado
             implementation("com.mysql:mysql-connector-j:8.0.33") // MySQL driver
+            // bcrypt para desktop
+            implementation("org.mindrot:jbcrypt:0.4")
         }
     }
 }

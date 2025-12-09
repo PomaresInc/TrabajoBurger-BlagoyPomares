@@ -1,8 +1,10 @@
 package ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros
+//package ies.sequeros.com.dam.pmdm.administrador.infraestructura.memoria
 
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import ies.sequeros.com.dam.pmdm.administrador.modelo.Dependiente
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IPasswordHasher
 import java.io.File
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -10,6 +12,8 @@ import kotlinx.serialization.json.Json
 
 class FileDependienteRepository(
     private val almacenDatos: AlmacenDatos,
+    // bcrypt variable
+    private val hasher: IPasswordHasher,
     private val fileName: String = "dependientes.json"
 ) : IDependienteRepositorio {
 
@@ -35,7 +39,12 @@ class FileDependienteRepository(
         val items = this.getAll().toMutableList()
 
         if (items.firstOrNull { it.name == item.name } == null) {
-            items.add(item)
+            // Encriptamos la contraseña antes de añadir a la lista
+            val dependienteHashed = item.copy(
+                password = hasher.hash(item.password)
+            )
+            items.add(dependienteHashed)
+            //items.add(item)
         } else {
             throw IllegalArgumentException("ALTA:El usuario con id:" + item.id + " ya existe")
         }
