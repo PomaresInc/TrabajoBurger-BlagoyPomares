@@ -7,15 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros.FileCategoriaRepository
 //import ies.sequeros.com.dam.pmdm.administrador.infraestructura.memoria.FileDependienteRepository
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.util.BcryptPasswordHasher
 
-// TODO para mañana (dia de la entrega) ver como importar correctamente los repository por la mañana a ser posible,
-//  he conseguido hacerlo para FileDependienteRepository, hay que ver si hace falta para los demas... Sino tendremos que hacerlos
-
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros.FileCategoriaRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros.FileDependienteRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros.FileLineaPedidoRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.ficheros.FilePedidoRepository
@@ -34,10 +31,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             // Crear almacén de datos para Android
             val almacenDatos: AlmacenDatos = AlmacenDatos(this)
+            // para bcrypt
+            val hasher = BcryptPasswordHasher()
 
             // Usando ficheros para todos los repositorios en móvil
             val dependienteRepositorio: IDependienteRepositorio =
-                FileDependienteRepository(almacenDatos)
+                FileDependienteRepository(almacenDatos, hasher)
 
             val categoriaRepositorio: ICategoriaRepositorio =
                 FileCategoriaRepository(almacenDatos)
