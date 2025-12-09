@@ -16,11 +16,14 @@ class CrearProductoUseCase (private val repositorio: IProductoRepositorio,
 
         val id = generateUUID()
 
+        // Copiar la imagen al directorio de productos
+        val nuevaImagePath = almacenDatos.copy(createUserCommand.imagePath, id, "/productos/")
+
         val item = Producto(
             id = id,
             name = createUserCommand.name,
             description = createUserCommand.description,
-            imagePath = createUserCommand.imagePath,
+            imagePath = nuevaImagePath,
             price = createUserCommand.price,
             categoriaId = createUserCommand.categoriaId,
             enabled = createUserCommand.enabled

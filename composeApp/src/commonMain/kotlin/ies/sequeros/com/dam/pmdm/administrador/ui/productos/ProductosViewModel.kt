@@ -67,6 +67,14 @@ class ProductosViewModel (
         }
     }
 
+    // Nueva función para recargar categorías
+    fun recargarCategorias() {
+        viewModelScope.launch {
+            val listaCategorias = listarCategoriasUseCase.invoke()
+            _categorias.value = listaCategorias
+        }
+    }
+
     fun setSelectedProducto(item: ProductoDTO?){
         _selected.value = item
     }
