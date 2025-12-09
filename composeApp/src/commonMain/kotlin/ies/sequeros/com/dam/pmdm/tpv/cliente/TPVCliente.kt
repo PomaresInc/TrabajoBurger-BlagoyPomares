@@ -31,11 +31,6 @@ fun TPVCliente(
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        Text(
-            text = "Por favor, introduce tu nombre para comenzar el pedido",
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
 
         OutlinedTextField(
             value = clientName,

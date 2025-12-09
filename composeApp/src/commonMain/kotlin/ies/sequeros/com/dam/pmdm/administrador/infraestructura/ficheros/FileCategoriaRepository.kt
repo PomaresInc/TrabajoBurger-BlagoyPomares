@@ -4,8 +4,9 @@ import ies.sequeros.com.dam.pmdm.administrador.modelo.Categoria
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.decodeFromString
 import java.io.File
-
 class FileCategoriaRepository(
     private val almacenDatos: AlmacenDatos,
     private val file: String = "categorias.json"
