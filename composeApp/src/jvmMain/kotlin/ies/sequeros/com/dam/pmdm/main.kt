@@ -10,7 +10,8 @@ import ies.sequeros.com.dam.pmdm.administrador.infraestructura.Producto.BBDDProd
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.producto.BBDDRepositorioProductoJava
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.LineaPedido.BBDDLienaPedidoRepository
 import ies.sequeros.com.dam.pmdm.administrador.infraestructura.lineapedido.BBDDRepositorioLineaPedidoJava
-import ies.sequeros.com.dam.pmdm.administrador.infraestructura.memoria.MemDependienteRepository
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
@@ -18,49 +19,64 @@ import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.AlmacenDatos
 import ies.sequeros.com.dam.pmdm.commons.infraestructura.DataBaseConnection
+
+import ies.sequeros.com.dam.pmdm.administrador.infraestructura.util.BcryptPasswordHasher
+
 import java.io.FileInputStream
 import java.util.logging.LogManager
 
 fun main() = application {
-    // Crear la conexión a la base de datos
+
     val dbConnection = DataBaseConnection()
     dbConnection.setConfig_path("/app.properties")
     dbConnection.open()
-    
-    // Usando base de datos para dependientes
-    val dependienteRepositorioJava = ies.sequeros.com.dam.pmdm.administrador.infraestructura.dependientes.BBDDRepositorioDependientesJava(dbConnection)
-    val dependienteRepositorio: IDependienteRepositorio = ies.sequeros.com.dam.pmdm.administrador.infraestructura.Dependiente.BBDDDependienteRepository(dependienteRepositorioJava)
 
-    // Usando base de datos para categorías
+    val hasher = BcryptPasswordHasher()
+
+    // Usando base de datos para dependientes
+    val dependienteRepositorioJava = BBDDRepositorioDependientesJava(dbConnection)
+    val dependienteRepositorio: IDependienteRepositorio = BBDDDependienteRepository(
+        dependienteRepositorioJava,
+        hasher
+    )
+
+    // Usando base de datos para categoria
     val categoriaRepositorioJava = BBDDRepositorioCategoriaJava(dbConnection)
     val categoriaRepositorio: ICategoriaRepositorio = BBDDCategoriaRepository(categoriaRepositorioJava)
 
-    // Usando base de datos para pedidos
+    // Usando base de datos para pedido
     val pedidoRepositorioJava = BBDDRepositorioPedidoJava(dbConnection)
     val pedidoRepositorio: IPedidoRepositorio = BBDDPedidoRepository(pedidoRepositorioJava)
 
-    // Usando base de datos para productos
+    // Usando base de datos para producto
     val productoRepositorioJava = BBDDRepositorioProductoJava(dbConnection)
     val productoRepositorio: IProductoRepositorio = BBDDProductoRepository(productoRepositorioJava)
 
-    // Usando base de datos para líneas de pedido
+    // Usando base de datos para linea de pedido
     val lineaPedidoRepositorioJava = BBDDRepositorioLineaPedidoJava(dbConnection)
     val lineaPedidoRepositorio: ILineaPedidoRepositorio = BBDDLienaPedidoRepository(lineaPedidoRepositorioJava)
 
-
+    // loging y config de ventana
     configureExternalLogging("./logging.properties")
+
     Window(
         onCloseRequest = {
-            // Cerrar la conexión a la base de datos
             dbConnection.close()
             exitApplication()
         },
         title = "VegaBurguer",
     ) {
-        //se envuelve el repositorio en java en uno que exista en Kotlin
-        App(dependienteRepositorio, categoriaRepositorio, pedidoRepositorio, productoRepositorio, lineaPedidoRepositorio, AlmacenDatos())
+        App(
+            dependienteRepositorio,
+            categoriaRepositorio,
+            pedidoRepositorio,
+            productoRepositorio,
+            lineaPedidoRepositorio,
+            AlmacenDatos()
+        )
     }
 }
+
 fun configureExternalLogging(path: String) {
     try {
         FileInputStream(path).use { fis ->

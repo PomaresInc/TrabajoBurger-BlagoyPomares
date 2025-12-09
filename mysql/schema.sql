@@ -85,7 +85,6 @@ ON DUPLICATE KEY UPDATE
     email = 'tpv@vegaburguer.com',
     enabled = TRUE;
 
-
 -- Otorgar permisos al usuario federico desde cualquier host
 GRANT ALL PRIVILEGES ON vegaburguer.* TO 'federico'@'%';
 FLUSH PRIVILEGES;

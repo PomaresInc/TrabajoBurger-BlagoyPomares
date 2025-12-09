@@ -37,8 +37,7 @@ class PedidosViewModel(
         
         viewModelScope.launch {
             val items = listarPedidosUseCase.invoke()
-            _items.value.clear()
-            _items.value.addAll(items)
+            _items.value = items.toMutableList()
         }
     }
 
@@ -49,8 +48,7 @@ class PedidosViewModel(
     fun refresh() {
         viewModelScope.launch {
             val items = listarPedidosUseCase.invoke()
-            _items.value.clear()
-            _items.value.addAll(items)
+            _items.value = items.toMutableList()
         }
     }
 }

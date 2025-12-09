@@ -32,11 +32,11 @@ class MainActivity : ComponentActivity() {
             // Crear almacén de datos para Android
             val almacenDatos: AlmacenDatos = AlmacenDatos(this)
             // para bcrypt
-            val hasher = BcryptPasswordHasher()
+            //val hasher = BcryptPasswordHasher()
 
             // Usando ficheros para todos los repositorios en móvil
             val dependienteRepositorio: IDependienteRepositorio =
-                FileDependienteRepository(almacenDatos, hasher)
+                FileDependienteRepository(almacenDatos)
 
             val categoriaRepositorio: ICategoriaRepositorio =
                 FileCategoriaRepository(almacenDatos)
@@ -61,3 +61,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
+/*
+librería para encriptar -> pbkdf2
+
+ - Para encriptar la contraseña
+
+addDependiente(command: DependienteCommand)
+    command=command.copy(password=encrypt(password);
+ */
