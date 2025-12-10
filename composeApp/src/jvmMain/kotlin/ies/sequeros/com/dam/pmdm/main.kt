@@ -72,7 +72,8 @@ fun main() = application {
             pedidoRepositorio,
             productoRepositorio,
             lineaPedidoRepositorio,
-            AlmacenDatos()
+            AlmacenDatos(),
+            hasher
         )
     }
 }
@@ -84,7 +85,7 @@ fun configureExternalLogging(path: String) {
             println("Logging configurado desde: $path")
         }
     } catch (e: Exception) {
-        println("⚠️ No se pudo cargar logging.properties externo: $path")
+        println(" No se pudo cargar logging.properties externo: $path")
         e.printStackTrace()
     }
 }

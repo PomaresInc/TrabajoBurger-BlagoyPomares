@@ -31,8 +31,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             // Crear almacén de datos para Android
             val almacenDatos: AlmacenDatos = AlmacenDatos(this)
-            // para bcrypt
-            //val hasher = BcryptPasswordHasher()
+            
+            // Crear password hasher para bcrypt
+            val passwordHasher = BcryptPasswordHasher()
 
             // Usando ficheros para todos los repositorios en móvil
             val dependienteRepositorio: IDependienteRepositorio =
@@ -56,7 +57,8 @@ class MainActivity : ComponentActivity() {
                 pedidoRepositorio,
                 productoRepositorio,
                 lineaPedidoRepositorio,
-                almacenDatos
+                almacenDatos,
+                passwordHasher
             )
         }
     }

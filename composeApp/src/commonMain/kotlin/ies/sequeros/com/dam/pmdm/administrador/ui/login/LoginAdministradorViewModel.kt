@@ -3,13 +3,15 @@ package ies.sequeros.com.dam.pmdm.administrador.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IDependienteRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IPasswordHasher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginAdministradorViewModel(
-    private val dependienteRepositorio: IDependienteRepositorio
+    private val dependienteRepositorio: IDependienteRepositorio,
+    private val passwordHasher: IPasswordHasher
 ) : ViewModel() {
     
     private val _usuario = MutableStateFlow("")
@@ -57,7 +59,7 @@ class LoginAdministradorViewModel(
                             dependiente == null -> {
                                 _mensajeError.value = "Usuario '${_usuario.value}' no encontrado"
                             }
-                            dependiente.password != _contrasena.value -> {
+                            !passwordHasher.verify(_contrasena.value, dependiente.password) -> {
                                 _mensajeError.value = "Contraseña incorrecta"
                             }
                             !dependiente.isAdmin -> {
