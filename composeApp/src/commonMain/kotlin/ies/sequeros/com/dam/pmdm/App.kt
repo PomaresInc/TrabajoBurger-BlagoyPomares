@@ -13,6 +13,7 @@ import ies.sequeros.com.dam.pmdm.administrador.modelo.ICategoriaRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IPasswordHasher
 import ies.sequeros.com.dam.pmdm.tpv.TPV
 import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministrador
 import ies.sequeros.com.dam.pmdm.administrador.ui.MainAdministradorViewModel
@@ -32,7 +33,8 @@ fun App(
     pedidoRepositorio: IPedidoRepositorio,
     productoRepositorio: IProductoRepositorio,
     lineaPedidoRepositorio: ILineaPedidoRepositorio,
-    almacenImagenes:AlmacenDatos
+    almacenImagenes:AlmacenDatos,
+    passwordHasher: IPasswordHasher
 ) {
 
     //view model
@@ -71,7 +73,7 @@ fun App(
                 })
             }
             composable(AppRoutes.LoginAdmin) {
-                val loginViewModel = remember { LoginAdministradorViewModel(dependienteRepositorio) }
+                val loginViewModel = remember { LoginAdministradorViewModel(dependienteRepositorio, passwordHasher) }
                 LoginAdministrador(
                     viewModel = loginViewModel,
                     onLoginExitoso = {
