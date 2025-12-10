@@ -23,16 +23,19 @@ import ies.sequeros.com.dam.pmdm.administrador.ui.productos.ProductosViewModel
 import ies.sequeros.com.dam.pmdm.administrador.ui.login.LoginAdministrador
 import ies.sequeros.com.dam.pmdm.administrador.ui.login.LoginAdministradorViewModel
 
+import ies.sequeros.com.dam.pmdm.administrador.modelo.IPasswordHasher
+
 @Suppress("ViewModelConstructorInComposable")
 @Composable
 
-fun App( 
+fun App(
     dependienteRepositorio : IDependienteRepositorio,
     categoriaRepositorio: ICategoriaRepositorio,
     pedidoRepositorio: IPedidoRepositorio,
     productoRepositorio: IProductoRepositorio,
     lineaPedidoRepositorio: ILineaPedidoRepositorio,
-    almacenImagenes:AlmacenDatos
+    almacenImagenes:AlmacenDatos,
+    hasher: IPasswordHasher
 ) {
 
     //view model
@@ -71,7 +74,7 @@ fun App(
                 })
             }
             composable(AppRoutes.LoginAdmin) {
-                val loginViewModel = remember { LoginAdministradorViewModel(dependienteRepositorio) }
+                val loginViewModel = remember { LoginAdministradorViewModel(dependienteRepositorio, hasher) }
                 LoginAdministrador(
                     viewModel = loginViewModel,
                     onLoginExitoso = {

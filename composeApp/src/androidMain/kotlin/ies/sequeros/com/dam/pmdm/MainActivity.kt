@@ -22,7 +22,6 @@ import ies.sequeros.com.dam.pmdm.administrador.modelo.ILineaPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPedidoRepositorio
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IProductoRepositorio
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -30,13 +29,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             // Crear almacén de datos para Android
-            val almacenDatos: AlmacenDatos = AlmacenDatos(this)
+            //val almacenDatos: AlmacenDatos = AlmacenDatos(this)
+            val almacenDatos = AlmacenDatos(this)
             // para bcrypt
-            //val hasher = BcryptPasswordHasher()
+            val hasher = BcryptPasswordHasher()
 
             // Usando ficheros para todos los repositorios en móvil
             val dependienteRepositorio: IDependienteRepositorio =
-                FileDependienteRepository(almacenDatos)
+                FileDependienteRepository(almacenDatos, hasher)
 
             val categoriaRepositorio: ICategoriaRepositorio =
                 FileCategoriaRepository(almacenDatos)
@@ -56,7 +56,8 @@ class MainActivity : ComponentActivity() {
                 pedidoRepositorio,
                 productoRepositorio,
                 lineaPedidoRepositorio,
-                almacenDatos
+                almacenDatos,
+                hasher
             )
         }
     }

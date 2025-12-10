@@ -1,4 +1,3 @@
-// Clase para bcrypt (android)
 package ies.sequeros.com.dam.pmdm.commons.infraestructura.util
 
 import ies.sequeros.com.dam.pmdm.administrador.modelo.IPasswordHasher
@@ -17,5 +16,4 @@ class BcryptPasswordHasher : IPasswordHasher {
             false
         }
     }
-
 }
